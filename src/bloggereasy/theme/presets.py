@@ -1,0 +1,27 @@
+from __future__ import annotations
+
+PRESETS: dict[str, dict] = {
+    "simple": {"layout_hint": "auto", "dark": False},
+    "magazine": {"layout_hint": "two-column", "dark": False, "dense": True},
+    "dark": {"layout_hint": "two-column", "dark": True},
+    "from-image": {"layout_hint": "two-column", "dark": False},
+}
+
+
+def apply_preset(structure: dict, template: str) -> dict:
+    preset = PRESETS.get(template, PRESETS["simple"])
+    out = dict(structure)
+    if preset.get("layout_hint") == "two-column":
+        out["layout"] = "two-column"
+        feats = dict(out.get("features") or {})
+        feats["sidebar"] = True
+        out["features"] = feats
+    if preset.get("dark"):
+        colors = dict(out.get("colors") or {})
+        colors["background"] = "#0f172a"
+        colors["text"] = "#e2e8f0"
+        colors["primary"] = colors.get("primary") or "#38bdf8"
+        colors["secondary"] = colors.get("secondary") or "#818cf8"
+        out["colors"] = colors
+    out["template"] = template
+    return out

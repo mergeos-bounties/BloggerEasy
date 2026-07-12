@@ -29,23 +29,30 @@ pip install -e ".[dev]"
 bloggereasy --help
 ```
 
-## Commands
+## Commands (runnable)
 
 ```bash
 bloggereasy version
 
-# HTML page → Blogger theme XML
-bloggereasy gen html --input data/samples/html/minimal_blog.html --out data/out/theme.xml
+# One-shot demo: generate XML for all bundled HTML samples
+bloggereasy demo
 
-# Image design → theme scaffold (needs vision extra for real palette)
+# HTML page → Blogger theme XML (importable)
+bloggereasy gen html --input data/samples/html/minimal_blog.html --out data/out/theme.xml
+bloggereasy validate --file data/out/theme.xml
+
+# Public URL → theme (stdlib urllib; respect site ToS)
+bloggereasy gen url --url "https://example.com" --out data/out/from_url.xml
+
+# Image design → palette + theme (Pillow optional)
 bloggereasy gen image --input path/to/mockup.png --out data/out/from_image.xml --title "My Blog"
 
-# Inspect parsed HTML structure
-bloggereasy parse html --input data/samples/html/minimal_blog.html
-
-# List built-in layout presets
+# Templates: simple | magazine | dark | from-image
+bloggereasy gen html -i data/samples/html/dark_dev.html -t dark -o data/out/dark.xml
 bloggereasy templates list
 ```
+
+Import XML in Blogger: **Theme → Backup / Restore → Upload**.
 
 ## Layout
 
