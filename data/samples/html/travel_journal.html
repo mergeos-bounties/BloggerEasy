@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A travel journal demo blog for BloggerEasy" />
+  <title>Wanderlust Journal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+    
+    :root {
+      --primary: #2c3e50;
+      --accent: #e67e22;
+      --bg-color: #fcfbf9;
+      --text-color: #34495e;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--text-color);
+      background: var(--bg-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      margin: 0 0 1rem 0;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 600px;
+    }
+
+    nav {
+      background: var(--primary);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      padding: 0 2rem;
+    }
+
+    .post {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
+      margin-bottom: 3rem;
+      transition: transform 0.3s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+    }
+
+    .post-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .post-content {
+      padding: 2rem;
+    }
+
+    .post-date {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .post h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+    }
+
+    .post p {
+      color: #7f8c8d;
+      margin-bottom: 1.5rem;
+    }
+
+    .read-more {
+      display: inline-block;
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2px;
+    }
+
+    .sidebar {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      height: fit-content;
+    }
+
+    .sidebar h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 1.5rem;
+      border-bottom: 1px solid #ecf0f1;
+      padding-bottom: 1rem;
+      margin-top: 0;
+    }
+
+    .sidebar img.author {
+      width: 100%;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Wanderlust Journal</h1>
+    <p>Documenting journeys across the globe, one breathtaking destination at a time.</p>
+  </div>
+  
+  <nav>
+    <a href="/">Destinations</a>
+    <a href="/about">About</a>
+    <a href="/gallery">Gallery</a>
+    <a href="/contact">Contact</a>
+  </nav>
+
+  <div class="container">
+    <main>
+      <article class="post">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Swiss Alps" class="post-image" />
+        <div class="post-content">
+          <span class="post-date">July 12, 2026</span>
+          <h2>Morning in the Swiss Alps</h2>
+          <p>The crisp mountain air hits differently when you wake up at 2,000 meters. Today we hiked the trail towards the Matterhorn, and the views were simply indescribable...</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+
+      <article class="post">
+        <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Paris Streets" class="post-image" />
+        <div class="post-content">
+          <span class="post-date">June 28, 2026</span>
+          <h2 class="post-title">Sunset Over the Seine</h2>
+          <p>Paris never loses its magic. Walking along the river as the sun sets behind the Eiffel Tower, with a fresh croissant in hand, is a cliché I will happily embrace every single time.</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+    </main>
+
+    <aside class="sidebar">
+      <h3>About the Explorer</h3>
+      <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Author Profile" class="author" style="width:150px; display:block; margin:0 auto 1rem auto;"/>
+      <p style="text-align:center; color:#7f8c8d; font-size:0.9rem;">Hi, I'm Alex. I quit my desk job to explore the world and capture its beauty. Join me on my adventures!</p>
+      
+      <h3 style="margin-top:2rem;">Popular Tags</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+        <span style="background:#ecf0f1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; color:var(--primary);">#Europe</span>
+        <span style="background:#ecf0f1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; color:var(--primary);">#Mountains</span>
+        <span style="background:#ecf0f1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; color:var(--primary);">#Food</span>
+        <span style="background:#ecf0f1; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; color:var(--primary);">#Photography</span>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>© 2026 Wanderlust Journal. Crafted with passion.</p>
+  </footer>
+</body>
+</html>
