@@ -18,6 +18,7 @@ Product source: [mergeos-bounties/BloggerEasy](https://github.com/mergeos-bounti
 - [Quick start](#quick-start)
 - [CLI reference](#cli-reference)
 - [Templates & samples](#templates--samples)
+- [Diagrams](#diagrams)
 - [Architecture](#architecture)
 - [Development](#development)
 - [MergeOS bounties](#mergeos-bounties)
@@ -101,6 +102,18 @@ bloggereasy demo -o data/out/demo
 Samples live in `data/samples/html/`. Prefer official/public page structure when scraping; respect site Terms of Service.
 
 ---
+
+
+## Diagrams
+
+Interactive Archify diagrams (dark/light theme, export PNG/SVG in the HTML viewer):
+
+| Diagram | Interactive | README embed |
+| --- | --- | --- |
+| **Architecture** | [docs/diagrams/architecture.html](docs/diagrams/architecture.html) | ![Architecture](docs/diagrams/architecture.svg) |
+| **Workflow** | [docs/diagrams/workflow.html](docs/diagrams/workflow.html) | ![Workflow](docs/diagrams/workflow.svg) |
+
+*Generated with [archify](https://github.com/tt-a1i) — open the `.html` files for theme toggle and export.*
 
 ## Architecture
 
