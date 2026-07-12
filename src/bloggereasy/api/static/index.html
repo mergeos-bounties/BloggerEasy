@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BloggerEasy — Paste HTML / Upload Image → Blogger XML</title>
+  <style>
+    :root { --bg:#0f1117; --panel:#1a1d27; --accent:#5b8cff; --ok:#3ddc84; --err:#ff6b6b; --txt:#e6e8ef; --muted:#9aa3b2; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--txt); }
+    header { padding:18px 24px; border-bottom:1px solid #262b38; display:flex; align-items:center; gap:12px; }
+    header h1 { font-size:18px; margin:0; }
+    header .badge { font-size:12px; color:var(--muted); border:1px solid #2c3242; padding:2px 8px; border-radius:999px; }
+    main { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:20px 24px; }
+    @media(max-width:880px){ main{ grid-template-columns:1fr; } }
+    .card { background:var(--panel); border:1px solid #262b38; border-radius:12px; padding:16px; }
+    .card h2 { margin:0 0 10px; font-size:14px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+    textarea { width:100%; min-height:220px; background:#0c0e14; color:var(--txt); border:1px solid #2c3242; border-radius:8px; padding:10px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; resize:vertical; }
+    select, input[type=text] { background:#0c0e14; color:var(--txt); border:1px solid #2c3242; border-radius:8px; padding:8px; width:100%; }
+    .row { display:flex; gap:10px; align-items:center; margin:10px 0; flex-wrap:wrap; }
+    label { font-size:13px; color:var(--muted); }
+    button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-size:14px; font-weight:600; cursor:pointer; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    .ghost { background:transparent; border:1px solid #2c3242; color:var(--txt); }
+    .status { font-size:13px; margin-top:10px; min-height:18px; }
+    .status.ok { color:var(--ok); }
+    .status.err { color:var(--err); }
+    pre { background:#0c0e14; border:1px solid #2c3242; border-radius:8px; padding:10px; max-height:280px; overflow:auto; font-size:12px; white-space:pre-wrap; }
+    .drop { border:2px dashed #2c3242; border-radius:8px; padding:14px; text-align:center; color:var(--muted); font-size:13px; }
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🪄 BloggerEasy</h1>
+    <span class="badge">Paste HTML / Upload Image → Blogger XML</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1 · Source</h2>
+      <div class="row">
+        <label><input type="radio" name="mode" value="html" checked /> Paste HTML</label>
+        <label><input type="radio" name="mode" value="image" /> Upload image</label>
+      </div>
+      <textarea id="htmlInput" placeholder="<html><head><title>My Blog</title></head><body>...</body></html>"></textarea>
+      <div id="imageBox" class="drop hidden">
+        <input type="file" id="imageInput" accept="image/*" />
+        <div style="margin-top:8px">PNG / JPG of a site design → we infer a theme.</div>
+      </div>
+      <div class="row">
+        <div style="flex:1">
+          <label>Template</label>
+          <select id="template">
+            <option value="simple">simple</option>
+            <option value="magazine">magazine</option>
+            <option value="portfolio">portfolio</option>
+            <option value="from-image">from-image</option>
+          </select>
+        </div>
+        <div style="flex:1">
+          <label>Title hint</label>
+          <input type="text" id="titleHint" placeholder="My Blog" />
+        </div>
+      </div>
+      <button id="genBtn">Generate Blogger XML ⬇</button>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="card">
+      <h2>2 · Result (Blogger theme XML)</h2>
+      <div class="row">
+        <button id="dlBtn" class="ghost" disabled>Download theme.xml</button>
+        <span id="meta" class="status"></span>
+      </div>
+      <pre id="xmlOut">—</pre>
+      <details>
+        <summary style="cursor:pointer;color:var(--muted);font-size:13px">Preview HTML</summary>
+        <pre id="previewOut">—</pre>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let lastXml = null;
+
+    document.querySelectorAll('input[name=mode]').forEach(r => r.addEventListener('change', (e) => {
+      const isImage = e.target.value === 'image';
+      $('imageBox').classList.toggle('hidden', !isImage);
+      $('htmlInput').classList.toggle('hidden', isImage);
+    }));
+
+    function setStatus(msg, kind) {
+      const s = $('status'); s.textContent = msg || ''; s.className = 'status ' + (kind || '');
+    }
+
+    $('genBtn').addEventListener('click', async () => {
+      const mode = document.querySelector('input[name=mode]:checked').value;
+      const template = $('template').value;
+      const btn = $('genBtn'); btn.disabled = true; setStatus('Generating…');
+      try {
+        let res;
+        if (mode === 'image') {
+          const file = $('imageInput').files[0];
+          if (!file) { setStatus('Pick an image first.', 'err'); btn.disabled=false; return; }
+          const fd = new FormData(); fd.append('file', file); fd.append('template', template);
+          res = await fetch('/gen/image', { method:'POST', body: fd });
+        } else {
+          const html = $('htmlInput').value.trim();
+          if (html.length < 20) { setStatus('Paste HTML (min 20 chars).', 'err'); btn.disabled=false; return; }
+          res = await fetch('/gen/html', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ html, template, title_hint: $('titleHint').value || null })
+          });
+        }
+        if (!res.ok) { const t = await res.text(); throw new Error('HTTP ' + res.status + ': ' + t.slice(0,200)); }
+        const data = await res.json();
+        lastXml = data.xml;
+        $('xmlOut').textContent = data.xml;
+        $('previewOut').textContent = data.preview_html || '—';
+        $('meta').textContent = 'title: ' + (data.title || '?') + ' · layout: ' + (data.layout || '?');
+        $('dlBtn').disabled = false;
+        setStatus(data.ok ? 'Done — valid Blogger XML.' : 'Done (validation warnings).', data.ok ? 'ok' : 'err');
+      } catch (e) {
+        setStatus(e.message, 'err');
+      } finally { btn.disabled = false; }
+    });
+
+    $('dlBtn').addEventListener('click', () => {
+      if (!lastXml) return;
+      const blob = new Blob([lastXml], { type:'application/xml' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'theme.xml'; a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</body>
+</html>

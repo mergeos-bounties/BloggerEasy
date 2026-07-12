@@ -4,7 +4,11 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from bloggereasy import __version__
-from bloggereasy.integrations.sdk import generate_from_html, generate_from_html_string
+from bloggereasy.integrations.sdk import (
+    generate_from_html,
+    generate_from_html_string,
+    generate_from_image,
+)
 from bloggereasy.theme.presets import PRESETS
 from bloggereasy.theme.preview import structure_to_preview_html
 
@@ -15,7 +19,21 @@ try:
 except ImportError as exc:  # pragma: no cover
     raise ImportError("Install bloggereasy[api] for FastAPI support") from exc
 
+_STATIC_DIR = Path(__file__).resolve().parent / "static"
+
 app = FastAPI(title="BloggerEasy", version=__version__)
+
+
+@app.get("/", response_class=HTMLResponse)
+def index() -> str:
+    """Web UI: paste HTML / upload image and download Blogger XML."""
+    index_html = _STATIC_DIR / "index.html"
+    if index_html.exists():
+        return index_html.read_text(encoding="utf-8")
+    return (
+        "<h1>BloggerEasy</h1>"
+        "<p>POST to /gen/html or /gen/image. See /docs for the API.</p>"
+    )
 
 
 class HtmlGenRequest(BaseModel):
@@ -96,3 +114,21 @@ def preview_html(req: HtmlGenRequest) -> str:
         out = Path(tmp) / "theme.xml"
         result = generate_from_html_string(req.html, out, template=req.template)
     return structure_to_preview_html(result["structure"])
+
+
+@app.post("/gen/image", response_class=PlainTextResponse)
+async def gen_image(
+    file: UploadFile = File(...),
+    template: str = Form("from-image"),
+    title: str = Form("My Blog"),
+) -> str:
+    """Upload an image (PNG/JPG) and receive a Blogger XML theme inferred from the design."""
+    if template not in PRESETS:
+        raise HTTPException(400, f"unknown template {template}")
+    with TemporaryDirectory() as tmp:
+        src = Path(tmp) / (file.filename or "upload.png")
+        src.write_bytes(await file.read())
+        out = Path(tmp) / "theme.xml"
+        result = generate_from_image(src, out, title=title, template=template)
+        xml = out.read_text(encoding="utf-8")
+    return xml
