@@ -1,30 +1,46 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 
-REQUIRED_SNIPPETS = (
-    "xmlns:b=",
-    "b:skin",
-    "type='Blog'",
-    "<b:section",
-    "b:widget",
-)
+XHTML_NS = "http://www.w3.org/1999/xhtml"
+B_NS = "http://www.google.com/2005/gml/b"
+
+
+def _has_namespace(xml: str, namespace: str) -> bool:
+    pattern = rf"xmlns(?::[a-zA-Z0-9_-]+)?\s*=\s*(['\"]){re.escape(namespace)}\1"
+    return re.search(pattern, xml, flags=re.IGNORECASE) is not None
 
 
 def validate_blogger_xml(xml: str) -> dict:
     errors: list[str] = []
     warnings: list[str] = []
-    if not xml.strip().startswith("<?xml"):
+
+    stripped = xml.strip()
+    if not stripped.startswith("<?xml"):
         warnings.append("missing XML declaration")
-    for snip in REQUIRED_SNIPPETS:
-        if snip not in xml and snip.replace("'", '"') not in xml:
-            # Blog type may use double quotes
-            if snip == "type='Blog'" and ('type="Blog"' in xml or "type='Blog'" in xml):
-                continue
-            if snip not in xml:
-                errors.append(f"missing required snippet: {snip}")
-    if "Header" not in xml:
+
+    if "<html" not in stripped.lower():
+        errors.append("missing <html> root element")
+        return {
+            "ok": False,
+            "errors": errors,
+            "warnings": warnings,
+            "bytes": len(xml.encode("utf-8")),
+        }
+
+    if not _has_namespace(xml, XHTML_NS):
+        errors.append("missing XHTML namespace on <html>")
+    if not _has_namespace(xml, B_NS):
+        errors.append("missing b namespace on <html>")
+    if "b:skin" not in xml:
+        errors.append("missing <b:skin> theme stylesheet block")
+    if "<b:section" not in xml:
+        errors.append("missing required <b:section> layout block")
+    if not re.search(r"type\s*=\s*(['\"])Blog\1", xml, flags=re.IGNORECASE):
+        errors.append("missing Blog widget")
+    if not re.search(r"title\s*=\s*(['\"]).*Header.*\1", xml, flags=re.IGNORECASE | re.DOTALL):
         warnings.append("no Header widget title found")
     if len(xml) < 800:
         warnings.append("theme XML is unusually small")
