@@ -20,3 +20,12 @@ def test_parse_single_column() -> None:
     structure = parse_html_file(SAMPLES / "single_column.html")
     assert structure["features"]["sidebar"] is False
     assert structure["layout"] == "single-column"
+
+
+def test_parse_travel_journal() -> None:
+    structure = parse_html_file(SAMPLES / "travel_journal.html")
+    assert "Travel" in structure["title"]
+    assert structure["features"]["sidebar"] is True
+    assert structure["layout"] == "two-column"
+    assert structure["fonts"]["heading"] == "Palatino"
+    assert len(structure["nav_links"]) == 4

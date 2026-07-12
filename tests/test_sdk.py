@@ -25,3 +25,13 @@ def test_generate_from_image_without_pillow(tmp_path: Path) -> None:
     assert result["mode"] == "image"
     assert out.exists()
     assert result["structure"]["title"] == "Palette Blog"
+
+
+def test_generate_from_html_travel_journal(tmp_path: Path) -> None:
+    out = tmp_path / "travel_journal.xml"
+    result = generate_from_html(SAMPLES / "travel_journal.html", out)
+    assert result["integration_version"] == "bloggereasy.sdk.v1"
+    assert out.exists()
+    text = out.read_text(encoding="utf-8")
+    assert "b:skin" in text
+    assert "Blog1" in text or "Blog" in text
