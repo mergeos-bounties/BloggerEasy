@@ -169,7 +169,22 @@ def preview_html_cmd(
 
 
 @app.command("validate")
-def validate_cmd(file: Path = typer.Option(..., "--file", "-f", exists=True, dir_okay=False)) -> None:
+def validate_cmd(
+    file: Path | None = typer.Option(None, "--file", "-f", exists=True, dir_okay=False),
+    directory: Path | None = typer.Option(None, "--dir", "-d", exists=True, file_okay=False),
+) -> None:
+    """Validate one theme XML or batch-validate a directory of themes."""
+    if directory is not None:
+        from bloggereasy.theme.batch import validate_theme_dir
+
+        report = validate_theme_dir(directory)
+        console.print_json(data=report)
+        if report["fail"]:
+            raise typer.Exit(1)
+        return
+    if file is None:
+        console.print("[red]Provide --file or --dir[/red]")
+        raise typer.Exit(1)
     result = validate_theme_file(file)
     console.print_json(data=result)
     if not result["ok"]:
