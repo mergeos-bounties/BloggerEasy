@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Journal</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            background-color: #faf9f6;
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin: 0;
+            font-family: 'Palatino', serif;
+        }
+        nav {
+            background-color: #fff;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        nav a {
+            color: #555;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 2rem;
+        }
+        .content {
+            flex: 3;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #fff;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+        }
+        .post {
+            background: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+        }
+        .post h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .post-date {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Wanderlust & Footprints</h1>
+</div>
+
+<nav class="menu">
+    <a href="/">Home</a>
+    <a href="/destinations">Destinations</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</nav>
+
+<div class="container">
+    <div class="content">
+        <div class="post">
+            <h2>Exploring the Swiss Alps</h2>
+            <div class="post-date">October 12, 2023</div>
+            <p>The air here is crisp and clean, unlike anything I've experienced before. Every mountain peak looks like a painting.</p>
+        </div>
+        <div class="post">
+            <h2>Coffee in Rome</h2>
+            <div class="post-date">September 28, 2023</div>
+            <p>There is nothing quite like sipping espresso near the Pantheon while watching the world go by. The history is palpable.</p>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <h3>About Me</h3>
+        <p>I am a solo traveler documenting my journey across the globe. Join me as I discover new cultures and cuisines.</p>
+        
+        <h3>Categories</h3>
+        <ul>
+            <li>Europe</li>
+            <li>Asia</li>
+            <li>Americas</li>
+            <li>Tips</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

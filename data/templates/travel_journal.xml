@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true'
+  b:templateVersion='1.0.0' expr:class='data:blog.languageDirection'
+  xmlns='http://www.w3.org/1999/xhtml'
+  xmlns:b='http://www.google.com/2005/gml/b'
+  xmlns:data='http://www.google.com/2005/gml/data'
+  xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='utf-8'/>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <title><data:blog.pageTitle/></title>
+  <b:include data='blog' name='all-head-content'/>
+  <b:skin version='1.0.0'><![CDATA[
+/*-----------------------------------------------
+BloggerEasy generated theme
+Template: simple
+-----------------------------------------------*/
+body {
+  margin: 0;
+  font-family: Georgia;
+  color: #333333;
+  background: #ffffff;
+  line-height: 1.6;
+}
+a { color: #333333; }
+.header-inner {
+  background: #333333;
+  color: #fff;
+  padding: 1.5rem 1rem;
+}
+.header-inner h1, .header-inner a { color: #fff; text-decoration: none; font-family: Palatino; }
+.nav-bar {
+  background: #faf9f6;
+  padding: 0.5rem 1rem;
+}
+.nav-bar ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-bar a { color: #fff; text-decoration: none; }
+.content-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+}
+.post {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.post h3 { font-family: Palatino; margin-top: 0; }
+.sidebar .widget {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.footer-inner {
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+@media (max-width: 800px) {
+  .content-wrap { grid-template-columns: 1fr; }
+}
+]]></b:skin>
+</head>
+<body>
+  <div class='header-outer'>
+    <header class='header-inner'>
+      <b:section class='header' id='header' maxwidgets='1' name='Header' showaddelement='no'>
+        <b:widget id='Header1' locked='true' title='Travel Journal' type='Header' version='1'>
+          <b:widget-settings>
+            <b:widget-setting name='displayUrl'/>
+            <b:widget-setting name='displayHeight'>0</b:widget-setting>
+            <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
+            <b:widget-setting name='useImage'>false</b:widget-setting>
+            <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+            <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
+            <b:widget-setting name='displayWidth'>-1</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+            <div id='header-inner'>
+              <h1><b:include name='title'/></h1>
+              <p><data:blog.metaDescription/></p>
+            </div>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </header>
+    <nav class='nav-bar'>
+      <ul>
+        <li><a expr:href="data:blog.homepageUrl">Home</a></li><li><a expr:href="data:blog.homepageUrl">Destinations</a></li><li><a expr:href="data:blog.homepageUrl">About</a></li><li><a expr:href="data:blog.homepageUrl">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class='content-wrap'>
+    <div class='main-outer'>
+      <b:section class='main' id='main' name='Main' showaddelement='yes'>
+        <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='1'>
+          <b:includable id='main'>
+            <b:loop values='data:posts' var='post'>
+              <article class='post'>
+                <h3><a expr:href='data:post.url'><data:post.title/></a></h3>
+                <div class='post-body'><data:post.body/></div>
+              </article>
+            </b:loop>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+    
+  <div class='column-right-outer'>
+    <div class='column-right-inner'>
+      <aside>
+      <b:section class='sidebar' id='sidebar' name='Sidebar' showaddelement='yes'>
+        <b:widget id='Profile1' locked='false' title='About Me' type='Profile' version='1'>
+          <b:widget-settings>
+            <b:widget-setting name='showaboutme'>true</b:widget-setting>
+            <b:widget-setting name='showlocation'>false</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>
+        <b:widget id='Label1' locked='false' title='Labels' type='Label' version='1'>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>
+      </b:section>
+      </aside>
+    </div>
+  </div>
+
+  </div>
+
+  <footer class='footer-inner'>
+    <b:section class='footer' id='footer' name='Footer' showaddelement='yes'>
+      <b:widget id='Text1' locked='false' title='Footer' type='Text' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='content'>Powered by BloggerEasy · Theme by BloggerEasy</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'><div class='widget-content'><data:content/></div></b:includable>
+      </b:widget>
+    </b:section>
+  </footer>
+</body>
+</html>
