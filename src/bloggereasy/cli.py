@@ -159,6 +159,14 @@ def validate_cmd(file: Path = typer.Option(..., "--file", "-f", exists=True, dir
         raise typer.Exit(1)
 
 
+@app.command("gui")
+def gui_cmd() -> None:
+    """Launch Qt desktop app: URL / image → Blogger XML (pip install -e '.[gui]')."""
+    from bloggereasy.gui.app import main as gui_main
+
+    raise SystemExit(gui_main())
+
+
 @app.command("serve")
 def serve_cmd(
     host: str = typer.Option("127.0.0.1", "--host"),
@@ -176,3 +184,4 @@ def serve_cmd(
 
 if __name__ == "__main__":
     app()
+

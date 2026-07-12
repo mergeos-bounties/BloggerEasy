@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bloggereasy"
-version = "0.2.3"
-description = "BloggerEasy: generate usable Blogger XML themes from HTML pages or design images"
+version = "0.3.0"
+description = "BloggerEasy: generate usable Blogger XML themes from HTML pages, URLs, or design images"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "MergeOS / ThanhTrucSolutions" }]
-keywords = ["blogger", "theme", "xml", "html", "generator", "blog"]
+keywords = ["blogger", "theme", "xml", "html", "generator", "blog", "gui"]
 dependencies = [
   "typer>=0.12",
   "rich>=13.7",
@@ -24,6 +24,10 @@ dev = [
   "pytest>=8.0",
   "ruff>=0.4",
 ]
+gui = [
+  "PySide6>=6.6",
+  "Pillow>=10.0",
+]
 vision = [
   "Pillow>=10.0",
   "numpy>=1.26",
@@ -36,6 +40,7 @@ api = [
 
 [project.scripts]
 bloggereasy = "bloggereasy.cli:app"
+bloggereasy-gui = "bloggereasy.gui.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
