@@ -20,3 +20,20 @@ def test_parse_single_column() -> None:
     structure = parse_html_file(SAMPLES / "single_column.html")
     assert structure["features"]["sidebar"] is False
     assert structure["layout"] == "single-column"
+
+
+def test_parse_expanded_layout_fixtures() -> None:
+    expected = {
+        "editorial_magazine.html": ("Northline Review", "two-column"),
+        "creative_portfolio_grid.html": ("Mira Stone Portfolio", "single-column"),
+        "docs_knowledge_base.html": ("Atlas Docs Hub", "two-column"),
+    }
+
+    for filename, (title, layout) in expected.items():
+        structure = parse_html_file(SAMPLES / filename)
+
+        assert structure["title"] == title
+        assert structure["layout"] == layout
+        assert structure["features"]["nav_count"] >= 3
+        assert structure["features"]["footer"] is True
+        assert structure["colors"]["primary"].startswith("#")
