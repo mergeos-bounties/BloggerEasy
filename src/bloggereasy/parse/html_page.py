@@ -5,6 +5,8 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
+from bloggereasy.parse.normalize import normalize_export_html
+
 
 def parse_html_file(path: Path) -> dict:
     html = path.read_text(encoding="utf-8", errors="replace")
@@ -12,6 +14,7 @@ def parse_html_file(path: Path) -> dict:
 
 
 def parse_html_string(html: str, source: str = "inline") -> dict:
+    html, normalize_report = normalize_export_html(html)
     soup = BeautifulSoup(html, "lxml")
 
     title = _text(soup.title) if soup.title else ""
@@ -59,6 +62,7 @@ def parse_html_string(html: str, source: str = "inline") -> dict:
             "footer": has_footer,
             "nav_count": len(nav_links),
         },
+        "normalize": normalize_report,
     }
 
 

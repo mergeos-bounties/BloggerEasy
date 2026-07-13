@@ -231,6 +231,17 @@ See [mergeos](https://github.com/mergeos-bounties/mergeos) · [docs/BOUNTY.md](d
 
 ---
 
+## Export HTML normalization
+
+Messy exported HTML (Figma / site exporters) is cleaned automatically before
+theme generation via `bloggereasy.parse.normalize.normalize_export_html()`,
+wired into `parse_html_string()` so every entry point (CLI, GUI, API, SDK)
+benefits. It strips `<script>` tags, caps oversized inline `<style>` blocks, and
+rewrites absolute `file://` / `localhost` / `127.0.0.1` paths — while leaving
+already-clean HTML untouched (idempotent). See issue #14.
+
+---
+
 ## License
 
 MIT · MergeOS / ThanhTrucSolutions
