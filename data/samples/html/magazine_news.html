@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="A magazine-style news demo blog for BloggerEasy" />
+  <title>The Daily Ledger</title>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #1a1a1a;
+      background: #faf8f4;
+      margin: 0;
+    }
+    header.masthead {
+      background: #b91c1c;
+      color: #fff;
+      padding: 1.5rem 2rem;
+      border-bottom: 4px solid #7f1010;
+    }
+    header.masthead h1 {
+      color: #fff;
+      margin: 0;
+      font-size: 2.4rem;
+      letter-spacing: 0.5px;
+      font-family: Georgia, serif;
+    }
+    header.masthead p { margin: 0.35rem 0 0 0; color: #fddede; font-style: italic; }
+    nav.menu {
+      background: #7f1010;
+      padding: 0.6rem 2rem;
+    }
+    nav.menu a {
+      color: #ffe9e9;
+      margin-right: 1.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    nav.menu a:hover { color: #ffffff; text-decoration: underline; }
+    h1, h2, h3 { color: #7f1010; }
+    .layout { display: flex; gap: 2rem; max-width: 1080px; margin: 2rem auto; padding: 0 1rem; }
+    main { flex: 3; }
+    aside.sidebar {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #e2ddd3;
+      border-radius: 3px;
+      padding: 1rem 1.25rem;
+      height: fit-content;
+    }
+    aside.sidebar h3 {
+      border-bottom: 2px solid #b91c1c;
+      padding-bottom: 0.4rem;
+      margin-top: 0;
+    }
+    article.post {
+      background: #fff;
+      border: 1px solid #e2ddd3;
+      border-radius: 3px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+    article.post h2 { margin-top: 0; font-size: 1.6rem; }
+    article.post .byline { color: #6b7280; font-size: 0.85rem; font-style: italic; margin-bottom: 0.75rem; }
+    a { color: #b91c1c; }
+    footer {
+      background: #1a1a1a;
+      color: #c9c4bb;
+      text-align: center;
+      padding: 1.75rem;
+    }
+    footer a { color: #e0b4b4; margin: 0 0.75rem; }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <h1>The Daily Ledger</h1>
+    <p>Independent reporting on business, politics, and culture since 1998</p>
+  </header>
+  <nav class="menu">
+    <a href="/">Front Page</a>
+    <a href="/business">Business</a>
+    <a href="/politics">Politics</a>
+    <a href="/culture">Culture</a>
+    <a href="/opinion">Opinion</a>
+  </nav>
+  <div class="layout">
+    <main>
+      <article class="post">
+        <h2>Central Banks Signal Cautious Path as Inflation Cools</h2>
+        <p class="byline">By Elena Marsh · Business Desk</p>
+        <p>Policymakers across major economies struck a measured tone this week, hinting that the aggressive tightening cycle of recent years may be nearing its end. Analysts caution that any pivot will hinge on incoming labor-market data rather than a fixed calendar.</p>
+      </article>
+      <article class="post">
+        <h2>City Council Approves Sweeping Transit Overhaul</h2>
+        <p class="byline">By Darius Kohl · Local Politics</p>
+        <p>After months of contentious debate, the council passed a decade-long plan to expand rapid bus corridors and add protected cycling lanes. Supporters call it transformative; critics question the financing model tied to future fare revenue.</p>
+      </article>
+    </main>
+    <aside class="sidebar">
+      <h3>Most Read</h3>
+      <p>1. The quiet return of the four-day work week</p>
+      <p>2. How small presses are reshaping fiction</p>
+      <p>3. A field guide to the new tax rules</p>
+    </aside>
+  </div>
+  <footer>
+    <p>&copy; 2026 The Daily Ledger. All rights reserved.</p>
+    <p>
+      <a href="/subscribe">Subscribe</a>
+      <a href="/masthead">Masthead</a>
+      <a href="/privacy">Privacy Policy</a>
+    </p>
+  </footer>
+</body>
+</html>

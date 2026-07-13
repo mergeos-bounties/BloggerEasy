@@ -41,6 +41,12 @@ PRESETS: dict[str, dict] = {
         "dense": False,
         "accent": "#d97742",
     },
+    "magazine_news": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": True,
+        "accent": "#b91c1c",
+    },
 }
 
 
