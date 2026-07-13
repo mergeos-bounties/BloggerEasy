@@ -168,6 +168,49 @@ def preview_html_cmd(
     console.print(f"[green]Preview[/green] {path}")
 
 
+@app.command("product")
+def product_cmd(
+    source_ref: str = typer.Argument(..., help="Local HTML/image path or URL, depending on --source."),
+    source: str = typer.Option("html", "--source", "-s", help="Input mode: html | url | image."),
+    out_dir: Path | None = typer.Option(None, "--out-dir", "-o", help="Bundle output directory."),
+    template: str = typer.Option("simple", "--template", "-t"),
+    title: str = typer.Option("My Blog", "--title", help="Title used for image mode."),
+) -> None:
+    """One command: input → importable theme + guide + preview + evidence bundle."""
+    from bloggereasy.integrations.bundle import generate_bundle
+
+    target = out_dir or (OUT_DIR / "product" / sanitize_filename(Path(source_ref).stem or "theme"))
+    try:
+        manifest = generate_bundle(
+            source_ref,
+            target,
+            source=source,
+            template=template,
+            title=title,
+        )
+    except (RuntimeError, ValueError, FileNotFoundError) as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(1) from exc
+
+    console.print(f"[green]Bundle ready[/green] → {target}")
+    table = Table(title="Product bundle")
+    table.add_column("File")
+    table.add_column("Path")
+    for name, path in manifest["files"].items():
+        table.add_row(name, str(path))
+    console.print(table)
+    console.print_json(
+        data={
+            "title": manifest["title"],
+            "template": manifest["template"],
+            "validation": manifest["validation"],
+            "import_hint": manifest["import_hint"],
+        }
+    )
+    if not manifest["validation"]["ok"]:
+        raise typer.Exit(1)
+
+
 @app.command("validate")
 def validate_cmd(
     file: Path | None = typer.Option(None, "--file", "-f", exists=True, dir_okay=False),
