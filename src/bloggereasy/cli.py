@@ -10,9 +10,11 @@ from bloggereasy import __version__
 from bloggereasy.config import OUT_DIR, SAMPLES_DIR, TEMPLATES_DIR
 from bloggereasy.integrations.sdk import (
     generate_from_html,
+    generate_from_html_string,
     generate_from_image,
     generate_from_url,
 )
+from bloggereasy.parse.fetch import fetch_html_url
 from bloggereasy.parse.html_page import parse_html_file
 from bloggereasy.theme.builder import build_blogger_xml, sanitize_filename
 from bloggereasy.theme.presets import PRESETS
@@ -156,12 +158,29 @@ def parse_html(input: Path = typer.Option(..., "--input", "-i", exists=True, dir
 
 @gen_app.command("html")
 def gen_html(
-    input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False),
+    input: Path | None = typer.Option(None, "--input", "-i", exists=True, dir_okay=False),
+    url: str | None = typer.Option(None, "--url", help="Fetch a public HTML page and generate from it."),
+    timeout: float = typer.Option(15.0, "--timeout", min=1.0, help="URL fetch timeout in seconds."),
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
 ) -> None:
-    out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}.xml")
-    result = generate_from_html(input, out_path, template=template)
+    if (input is None) == (url is None):
+        console.print("[red]Provide exactly one of --input or --url[/red]")
+        raise typer.Exit(1)
+
+    if url is not None:
+        out_path = out or (OUT_DIR / "from_url.xml")
+        try:
+            html = fetch_html_url(url, timeout=timeout)
+        except RuntimeError as exc:
+            console.print(f"[red]{exc}[/red]")
+            raise typer.Exit(1) from exc
+        result = generate_from_html_string(html, out_path, template=template)
+        result["url"] = url
+    else:
+        assert input is not None
+        out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}.xml")
+        result = generate_from_html(input, out_path, template=template)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={

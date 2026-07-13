@@ -124,7 +124,12 @@ bloggereasy gen image -i path\to\mockup.png --title "My Blog" -o data/out/from_i
 
 # From local HTML
 bloggereasy gen html -i data/samples/html/portfolio.html -t portfolio
+
+# From a public HTML page through the html command
+bloggereasy gen html --url "https://example.com/" --timeout 10 -t portfolio -o data/out/from_url.xml
 ```
+
+Respect robots.txt, site Terms of Service, and rate limits when fetching public URLs.
 
 ---
 
