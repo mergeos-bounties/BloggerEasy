@@ -47,6 +47,12 @@ PRESETS: dict[str, dict] = {
         "dense": True,
         "accent": "#b91c1c",
     },
+    "corporate_blue": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#0055aa",
+    },
 }
 
 
