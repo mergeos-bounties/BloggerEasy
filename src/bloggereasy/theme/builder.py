@@ -23,6 +23,7 @@ def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
     features = structure.get("features") or {}
     has_sidebar = bool(features.get("sidebar")) or layout in {"two-column", "three-column"}
     has_left_rail = bool(features.get("magazine_left_rail")) or layout == "three-column"
+    widget_mode = str(features.get("widgets") or "default")
     dense = bool(features.get("dense"))
     post_pad = "0.6rem 0.85rem" if dense else "1rem 1.25rem"
     content_pad = "0.5rem" if dense else "1rem"
@@ -106,21 +107,13 @@ a {{ color: {primary}; }}
 
     sidebar_section = ""
     if has_sidebar:
-        sidebar_section = """
+        sidebar_widgets = _sidebar_widgets(widget_mode)
+        sidebar_section = f"""
   <div class='column-right-outer'>
     <div class='column-right-inner'>
       <aside>
       <b:section class='sidebar' id='sidebar' name='Sidebar' showaddelement='yes'>
-        <b:widget id='Profile1' locked='false' title='About Me' type='Profile' version='1'>
-          <b:widget-settings>
-            <b:widget-setting name='showaboutme'>true</b:widget-setting>
-            <b:widget-setting name='showlocation'>false</b:widget-setting>
-          </b:widget-settings>
-          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
-        </b:widget>
-        <b:widget id='Label1' locked='false' title='Labels' type='Label' version='1'>
-          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
-        </b:widget>
+        {sidebar_widgets}
       </b:section>
 </aside>
     </div>
@@ -266,3 +259,31 @@ def _nav_linklist_widget(nav: list[dict]) -> str:
           <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
         </b:widget>
       </b:section>"""
+
+
+def _sidebar_widgets(mode: str) -> str:
+    profile = """
+        <b:widget id='Profile1' locked='false' title='About Me' type='Profile' version='1'>
+          <b:widget-settings>
+            <b:widget-setting name='showaboutme'>true</b:widget-setting>
+            <b:widget-setting name='showlocation'>false</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>"""
+    labels = """
+        <b:widget id='Label1' locked='false' title='Labels' type='Label' version='1'>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>"""
+    popular = """
+        <b:widget id='PopularPosts1' locked='false' title='Popular Posts' type='PopularPosts' version='1'>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>"""
+    archive = """
+        <b:widget id='BlogArchive1' locked='false' title='Archive' type='BlogArchive' version='1'>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>"""
+    if mode == "minimal":
+        return profile
+    if mode == "full":
+        return popular + labels + archive + profile
+    return profile + labels
