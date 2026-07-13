@@ -3,13 +3,16 @@ from __future__ import annotations
 import re
 from xml.sax.saxutils import escape
 
+from bloggereasy.theme.models import PageStructure, structure_dict
 
-def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
+
+def build_blogger_xml(structure: PageStructure | dict, *, template_name: str = "simple") -> str:
     """
     Build a minimal but importable Blogger theme XML.
 
     Uses classic Blogger layout with header, main (Blog), optional sidebar, footer.
     """
+    structure = structure_dict(structure)
     title = escape(str(structure.get("title") or "My Blog"))
     colors = structure.get("colors") or {}
     fonts = structure.get("fonts") or {}
