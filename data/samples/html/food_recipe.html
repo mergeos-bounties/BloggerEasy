@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="A food and recipe demo blog for BloggerEasy" />
+  <title>Simmer &amp; Sage</title>
+  <style>
+    body {
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      color: #3d2b1f;
+      background: #fff8f0;
+      margin: 0;
+    }
+    header.hero {
+      background: #d97742;
+      color: #fff;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    header.hero h1 { color: #fff; margin: 0; font-size: 2.5rem; }
+    header.hero p { margin: 0.4rem 0 0 0; color: #ffe8d6; font-style: italic; }
+    nav.menu {
+      background: #b85c2e;
+      padding: 0.75rem 2rem;
+      text-align: center;
+    }
+    nav.menu a {
+      color: #fff3e9;
+      margin: 0 1.25rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav.menu a:hover { color: #ffffff; text-decoration: underline; }
+    h1, h2 { color: #b85c2e; }
+    .layout { display: flex; gap: 1.75rem; max-width: 1020px; margin: 2rem auto; padding: 0 1.25rem; }
+    main { flex: 3; }
+    aside.sidebar {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #f0ddc8;
+      border-radius: 8px;
+      padding: 1.25rem;
+      height: fit-content;
+    }
+    aside.sidebar h3 { color: #d97742; margin-top: 0; }
+    article.post {
+      background: #fff;
+      border: 1px solid #f0ddc8;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(184, 92, 46, 0.08);
+    }
+    article.post h2 { margin-top: 0; }
+    article.post .meta { color: #9c7a5c; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    a { color: #d97742; }
+    footer {
+      background: #3d2b1f;
+      color: #e8cbb0;
+      text-align: center;
+      padding: 1.75rem;
+    }
+    footer a { color: #f0b58c; margin: 0 0.75rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>Simmer &amp; Sage</h1>
+    <p>Slow food, weeknight-friendly recipes from a small kitchen</p>
+  </header>
+  <nav class="menu">
+    <a href="/">Recipes</a>
+    <a href="/mains">Mains</a>
+    <a href="/baking">Baking</a>
+    <a href="/pantry">Pantry</a>
+    <a href="/about">About</a>
+  </nav>
+  <div class="layout">
+    <main>
+      <article class="post">
+        <h2>Braised Short Ribs with Roasted Garlic</h2>
+        <p class="meta">Serves 4 &middot; 3 hr 30 min &middot; Dutch oven</p>
+        <p>These ribs spend a lazy afternoon in the oven with red wine, whole heads of garlic, and a handful of thyme, coming out fall-apart tender with a sauce that deserves its own spoon.</p>
+      </article>
+      <article class="post">
+        <h2>Weeknight Miso Butter Pasta</h2>
+        <p class="meta">Serves 2 &middot; 20 min &middot; One pan</p>
+        <p>A pantry-staple dinner built on miso, butter, and starchy pasta water whisked into a glossy sauce, finished with scallions and a crack of black pepper.</p>
+      </article>
+    </main>
+    <aside class="sidebar">
+      <h3>Reader Favorites</h3>
+      <p>Brown Butter Chocolate Chip Cookies</p>
+      <p>Sunday Sourdough Starter Guide</p>
+      <p>Five-Ingredient Weeknight Soups</p>
+    </aside>
+  </div>
+  <footer>
+    <p>&copy; 2026 Simmer &amp; Sage. All rights reserved.</p>
+    <p>
+      <a href="/newsletter">Newsletter</a>
+      <a href="/index">Recipe Index</a>
+      <a href="/privacy">Privacy</a>
+    </p>
+  </footer>
+</body>
+</html>

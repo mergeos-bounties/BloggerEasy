@@ -35,6 +35,12 @@ PRESETS: dict[str, dict] = {
         "dense": False,
         "accent": "#c4a574",
     },
+    "food_recipe": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#d97742",
+    },
 }
 
 
