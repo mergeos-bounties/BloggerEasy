@@ -20,7 +20,11 @@ def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
     body_font = escape(str(fonts.get("body") or "system-ui, sans-serif"))
     heading_font = escape(str(fonts.get("heading") or body_font))
     layout = str(structure.get("layout") or "single-column")
-    has_sidebar = bool((structure.get("features") or {}).get("sidebar")) or layout == "two-column"
+    features = structure.get("features") or {}
+    has_sidebar = bool(features.get("sidebar")) or layout == "two-column"
+    dense = bool(features.get("dense"))
+    post_pad = "0.6rem 0.85rem" if dense else "1rem 1.25rem"
+    content_pad = "0.5rem" if dense else "1rem"
 
     nav = structure.get("nav_links") or []
     nav_html = "".join(
@@ -59,17 +63,17 @@ a {{ color: {primary}; }}
 .content-wrap {{
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: {content_pad};
   display: grid;
   grid-template-columns: {"1fr 300px" if has_sidebar else "1fr"};
-  gap: 1.5rem;
+  gap: {"1rem" if dense else "1.5rem"};
 }}
 .post {{
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
+  padding: {post_pad};
+  margin-bottom: {"0.6rem" if dense else "1rem"};
 }}
 .post h3 {{ font-family: {heading_font}; margin-top: 0; }}
 .sidebar .widget {{

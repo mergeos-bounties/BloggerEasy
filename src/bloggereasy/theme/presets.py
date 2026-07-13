@@ -17,6 +17,18 @@ PRESETS: dict[str, dict] = {
         "dense": True,
         "accent": "#b91c1c",
     },
+    "personal": {
+        "layout_hint": "single-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#7c3aed",
+    },
+    "docs": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": True,
+        "accent": "#0d9488",
+    },
 }
 
 
