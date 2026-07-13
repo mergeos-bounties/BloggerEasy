@@ -171,6 +171,21 @@ Respect site Terms of Service when fetching live URLs.
 
 ---
 
+## SEO defaults
+
+Generated themes include safe Blogger head placeholders for common search and
+social previews:
+
+- `description` uses `data:blog.metaDescription`
+- Open Graph site/title/description/url tags use Blogger data expressions
+- Twitter summary card title and description mirror the Blogger page metadata
+
+These snippets do not hard-code a domain, image, or author profile. Edit the
+generated XML after export if a blog needs custom preview images or verification
+tokens.
+
+---
+
 ## Diagrams
 
 System architecture and workflow — full width. Open HTML for dark/light theme.

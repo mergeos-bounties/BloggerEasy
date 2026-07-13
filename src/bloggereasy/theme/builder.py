@@ -131,6 +131,15 @@ a {{ color: {primary}; }}
 <head>
   <meta charset='utf-8'/>
   <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <meta expr:content='data:blog.metaDescription' name='description'/>
+  <meta expr:content='data:blog.title' property='og:site_name'/>
+  <meta expr:content='data:blog.pageTitle' property='og:title'/>
+  <meta expr:content='data:blog.metaDescription' property='og:description'/>
+  <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+  <meta content='website' property='og:type'/>
+  <meta content='summary_large_image' name='twitter:card'/>
+  <meta expr:content='data:blog.pageTitle' name='twitter:title'/>
+  <meta expr:content='data:blog.metaDescription' name='twitter:description'/>
   <title><data:blog.pageTitle/></title>
   <b:include data='blog' name='all-head-content'/>
   <b:skin version='1.0.0'><![CDATA[
