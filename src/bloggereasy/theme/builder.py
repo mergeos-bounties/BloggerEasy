@@ -21,7 +21,8 @@ def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
     heading_font = escape(str(fonts.get("heading") or body_font))
     layout = str(structure.get("layout") or "single-column")
     features = structure.get("features") or {}
-    has_sidebar = bool(features.get("sidebar")) or layout == "two-column"
+    has_sidebar = bool(features.get("sidebar")) or layout in {"two-column", "three-column"}
+    has_left_rail = bool(features.get("magazine_left_rail")) or layout == "three-column"
     dense = bool(features.get("dense"))
     post_pad = "0.6rem 0.85rem" if dense else "1rem 1.25rem"
     content_pad = "0.5rem" if dense else "1rem"
@@ -65,8 +66,14 @@ a {{ color: {primary}; }}
   margin: 0 auto;
   padding: {content_pad};
   display: grid;
-  grid-template-columns: {"1fr 300px" if has_sidebar else "1fr"};
+  grid-template-columns: {"220px 1fr 260px" if has_left_rail else "1fr 300px" if has_sidebar else "1fr"};
   gap: {"1rem" if dense else "1.5rem"};
+}}
+.magazine-featured {{
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 0.75rem;
 }}
 .post {{
   background: #fff;
@@ -114,9 +121,28 @@ a {{ color: {primary}; }}
           <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
         </b:widget>
       </b:section>
-      </aside>
+</aside>
     </div>
   </div>
+"""
+
+    left_rail_section = ""
+    if has_left_rail:
+        left_rail_section = """
+    <div class='column-left-outer'>
+      <div class='column-left-inner'>
+        <aside class='magazine-featured'>
+        <b:section class='magazine-left' id='magazine-left' name='Magazine Left Rail' showaddelement='yes'>
+          <b:widget id='TextFeatured1' locked='false' title='Featured' type='Text' version='1'>
+            <b:widget-settings>
+              <b:widget-setting name='content'>Featured story and editor picks</b:widget-setting>
+            </b:widget-settings>
+            <b:includable id='main'><div class='widget-content'><data:content/></div></b:includable>
+          </b:widget>
+        </b:section>
+        </aside>
+      </div>
+    </div>
 """
 
     # Blogger expects a full XML document with b: namespace
@@ -172,6 +198,7 @@ Template: {escape(template_name)}
   </div>
 
   <div class='content-wrap'>
+    {left_rail_section}
     <div class='main-outer'>
       <b:section class='main' id='main' name='Main' showaddelement='yes'>
         <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='1'>
