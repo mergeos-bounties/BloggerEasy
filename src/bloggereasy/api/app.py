@@ -129,6 +129,6 @@ async def gen_image(
         src = Path(tmp) / (file.filename or "upload.png")
         src.write_bytes(await file.read())
         out = Path(tmp) / "theme.xml"
-        result = generate_from_image(src, out, title=title, template=template)
+        generate_from_image(src, out, title=title, template=template)
         xml = out.read_text(encoding="utf-8")
     return xml
