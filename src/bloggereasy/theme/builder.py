@@ -48,8 +48,13 @@ body {{
   color: {text};
   background: {background};
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }}
 a {{ color: {primary}; }}
+img, iframe, video {{
+  max-width: 100%;
+  height: auto;
+}}
 .header-inner {{
   background: {primary};
   color: #fff;
@@ -101,6 +106,18 @@ a {{ color: {primary}; }}
 }}
 @media (max-width: 800px) {{
   .content-wrap {{ grid-template-columns: 1fr; }}
+  .header-inner {{ padding: 1rem; }}
+  .header-inner h1 {{ font-size: 1.65rem; line-height: 1.2; }}
+  .nav-bar ul {{ gap: 0.45rem; }}
+  .nav-bar a {{ display: inline-block; padding: 0.25rem 0; }}
+  .post {{ padding: 0.85rem; }}
+  .sidebar .widget {{ padding: 0.85rem; }}
+}}
+@media (max-width: 480px) {{
+  .content-wrap {{ padding: 0.5rem; }}
+  .nav-bar {{ padding: 0.45rem 0.65rem; }}
+  .nav-bar ul {{ flex-direction: column; gap: 0.25rem; }}
+  .footer-inner {{ font-size: 0.82rem; }}
 }}
 """.strip()
 

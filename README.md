@@ -191,6 +191,23 @@ tokens.
 
 ---
 
+## Mobile CSS notes
+
+Generated themes include Blogger-safe responsive CSS:
+
+- media queries at `800px` and `480px`
+- single-column mobile content layout
+- fluid `img`, `iframe`, and `video` elements
+- tighter header, post, sidebar, nav, and footer spacing on small screens
+- long-word wrapping for URLs and imported content
+
+The generated CSS avoids JavaScript-dependent layout behavior and keeps the
+rules inside Blogger's normal `b:skin` block. For AMP-style constraints, keep
+custom edits declarative: prefer media queries, fluid widths, and static spacing
+over script-driven resizing.
+
+---
+
 ## Diagrams
 
 System architecture and workflow — full width. Open HTML for dark/light theme.
