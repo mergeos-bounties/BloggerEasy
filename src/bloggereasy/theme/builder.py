@@ -19,13 +19,22 @@ def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
     text = escape(str(colors.get("text") or "#222222"))
     body_font = escape(str(fonts.get("body") or "system-ui, sans-serif"))
     heading_font = escape(str(fonts.get("heading") or body_font))
+    skin = structure.get("skin") or {}
+    spacing = skin.get("spacing") or {}
+    buttons = skin.get("buttons") or {}
     layout = str(structure.get("layout") or "single-column")
     features = structure.get("features") or {}
     has_sidebar = bool(features.get("sidebar")) or layout in {"two-column", "three-column"}
     has_left_rail = bool(features.get("magazine_left_rail")) or layout == "three-column"
     dense = bool(features.get("dense"))
-    post_pad = "0.6rem 0.85rem" if dense else "1rem 1.25rem"
-    content_pad = "0.5rem" if dense else "1rem"
+    post_pad = "0.6rem 0.85rem" if dense else str(spacing.get("card_padding") or "1rem 1.25rem")
+    content_pad = "0.5rem" if dense else str(spacing.get("section_padding") or "1rem")
+    gap = "1rem" if dense else str(spacing.get("gap") or "1.5rem")
+    radius = str(spacing.get("radius") or "8px")
+    button_bg = escape(str(buttons.get("background") or primary))
+    button_text = escape(str(buttons.get("color") or "#ffffff"))
+    button_pad = escape(str(buttons.get("padding") or "0.55rem 0.9rem"))
+    button_radius = escape(str(buttons.get("radius") or "6px"))
 
     nav = structure.get("nav_links") or []
     nav_html = "".join(
@@ -68,7 +77,7 @@ a {{ color: {primary}; }}
   padding: {content_pad};
   display: grid;
   grid-template-columns: {"220px 1fr 260px" if has_left_rail else "1fr 300px" if has_sidebar else "1fr"};
-  gap: {"1rem" if dense else "1.5rem"};
+  gap: {gap};
 }}
 .magazine-featured {{
   background: #fff7ed;
@@ -79,15 +88,21 @@ a {{ color: {primary}; }}
 .post {{
   background: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: {radius};
   padding: {post_pad};
   margin-bottom: {"0.6rem" if dense else "1rem"};
 }}
 .post h3 {{ font-family: {heading_font}; margin-top: 0; }}
+.post a, .button, button {{
+  background: {button_bg};
+  color: {button_text};
+  padding: {button_pad};
+  border-radius: {button_radius};
+}}
 .sidebar .widget {{
   background: #f8fafc;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: {radius};
   padding: 1rem;
   margin-bottom: 1rem;
 }}

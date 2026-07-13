@@ -5,6 +5,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
+from bloggereasy.parse.css import extract_css_skin
 from bloggereasy.parse.normalize import normalize_export_html
 
 
@@ -37,7 +38,8 @@ def parse_html_string(html: str, source: str = "inline") -> dict:
     paragraphs = [_text(p) for p in soup.find_all("p")[:8] if _text(p)]
 
     colors = _extract_colors(html)
-    fonts = _extract_fonts(html, soup)
+    skin = extract_css_skin(html)
+    fonts = skin["fonts"]
     has_sidebar = bool(
         soup.select_one("aside, .sidebar, #sidebar, .widget-area, [class*='sidebar']")
     )
@@ -55,6 +57,7 @@ def parse_html_string(html: str, source: str = "inline") -> dict:
         "sample_paragraphs": paragraphs,
         "colors": colors,
         "fonts": fonts,
+        "skin": skin,
         "layout": layout,
         "features": {
             "header": has_header,
