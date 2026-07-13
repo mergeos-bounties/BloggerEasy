@@ -29,6 +29,12 @@ PRESETS: dict[str, dict] = {
         "dense": True,
         "accent": "#0d9488",
     },
+    "portfolio_photo": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#c4a574",
+    },
 }
 
 
