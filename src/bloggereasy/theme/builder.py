@@ -20,6 +20,11 @@ def build_blogger_xml(structure: PageStructure | dict, *, template_name: str = "
     secondary = escape(str(colors.get("secondary") or "#34a853"))
     background = escape(str(colors.get("background") or "#ffffff"))
     text = escape(str(colors.get("text") or "#222222"))
+    surface = escape(str(colors.get("surface") or "#ffffff"))
+    muted = escape(str(colors.get("muted") or "#f8fafc"))
+    border = escape(str(colors.get("border") or "#e5e7eb"))
+    footer = escape(str(colors.get("footer") or "#0f172a"))
+    footer_text = escape(str(colors.get("footer_text") or "#e2e8f0"))
     body_font = escape(str(fonts.get("body") or "system-ui, sans-serif"))
     heading_font = escape(str(fonts.get("heading") or body_font))
     skin = structure.get("skin") or {}
@@ -95,8 +100,8 @@ img, iframe, video {{
   padding: 0.75rem;
 }}
 .post {{
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: {surface};
+  border: 1px solid {border};
   border-radius: {radius};
   padding: {post_pad};
   margin-bottom: {"0.6rem" if dense else "1rem"};
@@ -109,8 +114,8 @@ img, iframe, video {{
   border-radius: {button_radius};
 }}
 .sidebar .widget {{
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
+  background: {muted};
+  border: 1px solid {border};
   border-radius: {radius};
   padding: 1rem;
   margin-bottom: 1rem;
@@ -119,8 +124,8 @@ img, iframe, video {{
   margin-top: 2rem;
   padding: 1rem;
   text-align: center;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: {footer};
+  color: {footer_text};
   font-size: 0.9rem;
 }}
 @media (max-width: 800px) {{

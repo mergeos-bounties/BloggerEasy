@@ -164,6 +164,7 @@ def gen_html(
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
     widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     _validate_widgets(widgets)
     if (input is None) == (url is None):
@@ -177,12 +178,12 @@ def gen_html(
         except RuntimeError as exc:
             console.print(f"[red]{exc}[/red]")
             raise typer.Exit(1) from exc
-        result = generate_from_html_string(html, out_path, template=template, widgets=widgets)
+        result = generate_from_html_string(html, out_path, template=template, widgets=widgets, dark=dark)
         result["url"] = url
     else:
         assert input is not None
         out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}.xml")
-        result = generate_from_html(input, out_path, template=template, widgets=widgets)
+        result = generate_from_html(input, out_path, template=template, widgets=widgets, dark=dark)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={
@@ -200,11 +201,19 @@ def gen_url(
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
     widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     out_path = out or (OUT_DIR / "from_url.xml")
     _validate_widgets(widgets)
     try:
-        result = generate_from_url(url, out_path, template=template, cache_dir=OUT_DIR, widgets=widgets)
+        result = generate_from_url(
+            url,
+            out_path,
+            template=template,
+            cache_dir=OUT_DIR,
+            widgets=widgets,
+            dark=dark,
+        )
     except RuntimeError as exc:
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
@@ -219,10 +228,11 @@ def gen_image(
     title: str = typer.Option("My Blog", "--title"),
     template: str = typer.Option("from-image", "--template", "-t"),
     widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}-image.xml")
     _validate_widgets(widgets)
-    result = generate_from_image(input, out_path, title=title, template=template, widgets=widgets)
+    result = generate_from_image(input, out_path, title=title, template=template, widgets=widgets, dark=dark)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={
