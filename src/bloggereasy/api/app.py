@@ -14,7 +14,7 @@ from bloggereasy.theme.preview import structure_to_preview_html
 
 try:
     from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-    from fastapi.responses import HTMLResponse, PlainTextResponse
+    from fastapi.responses import HTMLResponse, Response, PlainTextResponse
     from pydantic import BaseModel, Field
 except ImportError as exc:  # pragma: no cover
     raise ImportError("Install bloggereasy[api] for FastAPI support") from exc
@@ -72,6 +72,19 @@ def gen_html_raw(req: HtmlGenRequest) -> str:
     if not data["ok"]:
         raise HTTPException(400, detail=data["validation"])
     return data["xml"]
+
+
+@app.post("/gen/html/download")
+def gen_html_download(req: HtmlGenRequest) -> Response:
+    data = gen_html(req)
+    if not data["ok"]:
+        raise HTTPException(400, detail=data["validation"])
+    filename = _download_filename(data.get("title") or "bloggereasy-theme")
+    return Response(
+        content=data["xml"],
+        media_type="application/xml",
+        headers={"Content-Disposition": f'attachment; filename="{filename}.xml"'},
+    )
 
 
 @app.post("/gen/html/multipart")
@@ -132,3 +145,25 @@ async def gen_image(
         generate_from_image(src, out, title=title, template=template)
         xml = out.read_text(encoding="utf-8")
     return xml
+
+
+@app.post("/gen/image/download")
+async def gen_image_download(
+    file: UploadFile = File(...),
+    template: str = Form("from-image"),
+    title: str = Form("My Blog"),
+) -> Response:
+    xml = await gen_image(file=file, template=template, title=title)
+    filename = _download_filename(title or "image-theme")
+    return Response(
+        content=xml,
+        media_type="application/xml",
+        headers={"Content-Disposition": f'attachment; filename="{filename}.xml"'},
+    )
+
+
+def _download_filename(title: str) -> str:
+    safe = "".join(ch.lower() if ch.isalnum() else "-" for ch in title).strip("-")
+    while "--" in safe:
+        safe = safe.replace("--", "-")
+    return safe or "bloggereasy-theme"
