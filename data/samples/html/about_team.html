@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Team — About us</title>
+  <meta name="description" content="Team about page sample for BloggerEasy" />
+  <style>
+    body { margin:0; font-family: system-ui,sans-serif; background:#f8fafc; color:#0f172a; }
+    header { text-align:center; padding:2.5rem 1rem 1rem; }
+    header h1 { margin:0; font-size:1.85rem; }
+    header p { color:#64748b; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:900px; margin:1.5rem auto 3rem; padding:0 1rem; }
+    .card { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:1.25rem; text-align:center; }
+    .avatar { width:72px; height:72px; border-radius:999px; margin:0 auto 0.75rem;
+              background:linear-gradient(135deg,#22d3ee,#6366f1); }
+    .role { color:#64748b; font-size:0.9rem; }
+    footer { text-align:center; color:#94a3b8; padding:2rem; font-size:0.85rem; }
+    @media (max-width:700px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Meet the team</h1>
+    <p>Sample about page for theme conversion demos.</p>
+  </header>
+  <section class="grid">
+    <div class="card"><div class="avatar"></div><h2>Alex Chen</h2><div class="role">Product</div></div>
+    <div class="card"><div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"></div><h2>Sam Rivera</h2><div class="role">Engineering</div></div>
+    <div class="card"><div class="avatar" style="background:linear-gradient(135deg,#10b981,#0ea5e9)"></div><h2>Jordan Lee</h2><div class="role">Design</div></div>
+  </section>
+  <footer>Demo HTML · BloggerEasy about_team</footer>
+</body>
+</html>
