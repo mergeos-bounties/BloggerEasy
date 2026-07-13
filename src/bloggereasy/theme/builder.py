@@ -36,6 +36,7 @@ def build_blogger_xml(structure: dict, *, template_name: str = "simple") -> str:
             '<li><a expr:href="data:blog.homepageUrl">Home</a></li>'
             '<li><a href="#">About</a></li>'
         )
+    nav_widget = _nav_linklist_widget(nav)
 
     description = escape(str(structure.get("description") or "Powered by BloggerEasy"))
 
@@ -168,6 +169,7 @@ Template: {escape(template_name)}
       <ul>
         {nav_html}
       </ul>
+      {nav_widget}
     </nav>
   </div>
 
@@ -208,3 +210,23 @@ Template: {escape(template_name)}
 def sanitize_filename(name: str) -> str:
     slug = re.sub(r"[^a-zA-Z0-9._-]+", "-", name.strip()).strip("-").lower()
     return slug or "theme"
+
+
+def _nav_linklist_widget(nav: list[dict]) -> str:
+    links = nav[:8] or [{"label": "Home", "href": "#"}, {"label": "About", "href": "#"}]
+    settings = ["<b:widget-setting name='sorting'>NONE</b:widget-setting>"]
+    for i, item in enumerate(links):
+        label = escape(str(item.get("label") or "Link"))
+        href = escape(str(item.get("href") or "#"))
+        settings.append(f"<b:widget-setting name='link-{i}'>{href}</b:widget-setting>")
+        settings.append(f"<b:widget-setting name='link-{i}.name'>{label}</b:widget-setting>")
+    settings_xml = "\n            ".join(settings)
+    return f"""
+      <b:section class='nav-widgets' id='navigation' name='Navigation' showaddelement='yes'>
+        <b:widget id='LinkList1' locked='false' title='Navigation' type='LinkList' version='1'>
+          <b:widget-settings>
+            {settings_xml}
+          </b:widget-settings>
+          <b:includable id='main'><div class='widget-content'><data:title/></div></b:includable>
+        </b:widget>
+      </b:section>"""
