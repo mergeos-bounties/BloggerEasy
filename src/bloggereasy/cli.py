@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import re
 from pathlib import Path
 
 import typer
@@ -17,7 +19,7 @@ from bloggereasy.integrations.sdk import (
 from bloggereasy.parse.fetch import fetch_html_url
 from bloggereasy.parse.html_page import parse_html_file
 from bloggereasy.theme.builder import build_blogger_xml, sanitize_filename
-from bloggereasy.theme.presets import PRESETS
+from bloggereasy.theme.presets import PRESETS, PRESET_TAGS
 from bloggereasy.theme.validate import validate_theme_file
 
 app = typer.Typer(
@@ -139,16 +141,30 @@ def demo_cmd(
 
 
 @templates_app.command("list")
-def templates_list() -> None:
-    table = Table(title="Templates")
+def templates_list(
+    tag: str | None = typer.Option(None, "--tag", "-t", help="Filter templates by tag/category (e.g. light, dark, blog, portfolio, creative)."),
+) -> None:
+    """List built-in templates, optionally filtered by tag."""
+    table = Table(title="Templates" + (f" (tag: {tag})" if tag else ""))
     table.add_column("Name")
+    table.add_column("Tags")
     table.add_column("Notes")
+    shown = 0
     for name, meta in PRESETS.items():
-        table.add_row(name, str(meta))
+        tags = PRESET_TAGS.get(name, [])
+        if tag and tag not in tags:
+            continue
+        table.add_row(name, ", ".join(tags), str(meta.get("notes", "")))
+        shown += 1
+    if not shown:
+        console.print(f"[yellow]No templates match tag '{tag}'[/yellow]")
+        available = sorted({t for tags in PRESET_TAGS.values() for t in tags})
+        console.print(f"Available tags: {', '.join(available)}")
+    else:
+        console.print(table)
     if TEMPLATES_DIR.exists():
         for path in sorted(TEMPLATES_DIR.glob("*.xml")):
-            table.add_row(path.stem, f"file:{path.name}")
-    console.print(table)
+            table.add_row(path.stem, "custom", f"file:{path.name}")
 
 
 @parse_app.command("html")
@@ -324,12 +340,13 @@ def product_cmd(
 def validate_cmd(
     file: Path | None = typer.Option(None, "--file", "-f", exists=True, dir_okay=False),
     directory: Path | None = typer.Option(None, "--dir", "-d", exists=True, file_okay=False),
+    strict: bool = typer.Option(False, "--strict", help="Apply stricter validation (size floor, CDATA depth check)."),
 ) -> None:
     """Validate one theme XML or batch-validate a directory of themes."""
     if directory is not None:
         from bloggereasy.theme.batch import validate_theme_dir
 
-        report = validate_theme_dir(directory)
+        report = validate_theme_dir(directory, strict=strict)
         console.print_json(data=report)
         if report["fail"]:
             raise typer.Exit(1)
@@ -337,7 +354,7 @@ def validate_cmd(
     if file is None:
         console.print("[red]Provide --file or --dir[/red]")
         raise typer.Exit(1)
-    result = validate_theme_file(file)
+    result = validate_theme_file(file, strict=strict)
     console.print_json(data=result)
     if not result["ok"]:
         raise typer.Exit(1)
@@ -366,6 +383,21 @@ def serve_cmd(
     uvicorn.run("bloggereasy.api.app:app", host=host, port=port, log_level="info")
 
 
+@app.command("tokens")
+def tokens_cmd(
+    template: str = typer.Option("simple", "--template", "-t", help="Template preset to extract tokens from."),
+    out: Path | None = typer.Option(None, "--out", "-o", help="Write JSON file instead of printing."),
+) -> None:
+    """Export CSS variable theme tokens as JSON from a preset."""
+    from bloggereasy.theme.presets import tokens_for_preset
+
+    data = tokens_for_preset(template)
+    if out is not None:
+        out.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        console.print(f"[green]Tokens written[/green] → {out}")
+    else:
+        console.print_json(data=data)
+
+
 if __name__ == "__main__":
     app()
-
