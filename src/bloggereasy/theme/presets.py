@@ -69,12 +69,7 @@ def apply_preset(structure: PageStructure | dict, template: str) -> dict:
             feats["magazine_left_rail"] = True
         out["features"] = feats
     if preset.get("dark"):
-        colors = dict(out.get("colors") or {})
-        colors["background"] = "#0f172a"
-        colors["text"] = "#e2e8f0"
-        colors["primary"] = colors.get("primary") or "#38bdf8"
-        colors["secondary"] = colors.get("secondary") or "#818cf8"
-        out["colors"] = colors
+        out = apply_dark_variant(out)
     if preset.get("accent") and not preset.get("dark"):
         colors = dict(out.get("colors") or {})
         colors["primary"] = preset["accent"]
@@ -84,4 +79,27 @@ def apply_preset(structure: PageStructure | dict, template: str) -> dict:
         feats["dense"] = True
         out["features"] = feats
     out["template"] = template
+    return out
+
+
+def apply_dark_variant(structure: dict) -> dict:
+    out = dict(structure)
+    colors = dict(out.get("colors") or {})
+    colors.update(
+        {
+            "background": "#0f172a",
+            "text": "#e2e8f0",
+            "primary": colors.get("primary") or "#38bdf8",
+            "secondary": colors.get("secondary") or "#818cf8",
+            "surface": "#111827",
+            "muted": "#1e293b",
+            "border": "#334155",
+            "footer": "#020617",
+            "footer_text": "#cbd5e1",
+        }
+    )
+    out["colors"] = colors
+    features = dict(out.get("features") or {})
+    features["dark"] = True
+    out["features"] = features
     return out
