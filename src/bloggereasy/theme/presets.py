@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from bloggereasy.theme.models import PageStructure, structure_dict
+
 PRESETS: dict[str, dict] = {
     "simple": {"layout_hint": "auto", "dark": False},
     "magazine": {"layout_hint": "three-column", "dark": False, "dense": True},
@@ -56,9 +58,9 @@ PRESETS: dict[str, dict] = {
 }
 
 
-def apply_preset(structure: dict, template: str) -> dict:
+def apply_preset(structure: PageStructure | dict, template: str) -> dict:
     preset = PRESETS.get(template, PRESETS["simple"])
-    out = dict(structure)
+    out = structure_dict(structure)
     if preset.get("layout_hint") in {"two-column", "three-column"}:
         out["layout"] = preset["layout_hint"]
         feats = dict(out.get("features") or {})
