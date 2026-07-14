@@ -64,7 +64,9 @@ def samples_cmd() -> None:
 @app.command("stats")
 def stats_cmd() -> None:
     """Quick inventory: templates, samples, last demo outputs."""
-    html_n = len(list((SAMPLES_DIR / "html").glob("*.html"))) if (SAMPLES_DIR / "html").is_dir() else 0
+    html_n = (
+        len(list((SAMPLES_DIR / "html").glob("*.html"))) if (SAMPLES_DIR / "html").is_dir() else 0
+    )
     demo_n = len(list((OUT_DIR / "demo").glob("*.xml"))) if (OUT_DIR / "demo").is_dir() else 0
     console.print_json(
         data={
@@ -114,7 +116,9 @@ def demo_cmd(
     """Generate themes for all bundled HTML samples (runnable smoke demo)."""
     root = out_dir or (OUT_DIR / "demo")
     root.mkdir(parents=True, exist_ok=True)
-    samples = sorted((SAMPLES_DIR / "html").glob("*.html")) if (SAMPLES_DIR / "html").exists() else []
+    samples = (
+        sorted((SAMPLES_DIR / "html").glob("*.html")) if (SAMPLES_DIR / "html").exists() else []
+    )
     if not samples:
         console.print("[red]No samples under data/samples/html[/red]")
         raise typer.Exit(1)
@@ -152,18 +156,24 @@ def templates_list() -> None:
 
 
 @parse_app.command("html")
-def parse_html(input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False)) -> None:
+def parse_html(
+    input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False),
+) -> None:
     console.print_json(data=parse_html_file(input))
 
 
 @gen_app.command("html")
 def gen_html(
     input: Path | None = typer.Option(None, "--input", "-i", exists=True, dir_okay=False),
-    url: str | None = typer.Option(None, "--url", help="Fetch a public HTML page and generate from it."),
+    url: str | None = typer.Option(
+        None, "--url", help="Fetch a public HTML page and generate from it."
+    ),
     timeout: float = typer.Option(15.0, "--timeout", min=1.0, help="URL fetch timeout in seconds."),
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
-    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    widgets: str = typer.Option(
+        "default", "--widgets", help="Sidebar widgets: default, minimal, full."
+    ),
     dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     _validate_widgets(widgets)
@@ -178,7 +188,9 @@ def gen_html(
         except RuntimeError as exc:
             console.print(f"[red]{exc}[/red]")
             raise typer.Exit(1) from exc
-        result = generate_from_html_string(html, out_path, template=template, widgets=widgets, dark=dark)
+        result = generate_from_html_string(
+            html, out_path, template=template, widgets=widgets, dark=dark
+        )
         result["url"] = url
     else:
         assert input is not None
@@ -200,7 +212,9 @@ def gen_url(
     url: str = typer.Option(..., "--url", "-u"),
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
-    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    widgets: str = typer.Option(
+        "default", "--widgets", help="Sidebar widgets: default, minimal, full."
+    ),
     dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     out_path = out or (OUT_DIR / "from_url.xml")
@@ -218,7 +232,9 @@ def gen_url(
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
     console.print(f"[green]Wrote[/green] {result['output']}")
-    console.print_json(data={"title": result["structure"]["title"], "validation": result["validation"]})
+    console.print_json(
+        data={"title": result["structure"]["title"], "validation": result["validation"]}
+    )
 
 
 @gen_app.command("image")
@@ -227,12 +243,16 @@ def gen_image(
     out: Path | None = typer.Option(None, "--out", "-o"),
     title: str = typer.Option("My Blog", "--title"),
     template: str = typer.Option("from-image", "--template", "-t"),
-    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    widgets: str = typer.Option(
+        "default", "--widgets", help="Sidebar widgets: default, minimal, full."
+    ),
     dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}-image.xml")
     _validate_widgets(widgets)
-    result = generate_from_image(input, out_path, title=title, template=template, widgets=widgets, dark=dark)
+    result = generate_from_image(
+        input, out_path, title=title, template=template, widgets=widgets, dark=dark
+    )
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={
@@ -244,7 +264,9 @@ def gen_image(
 
 
 @gen_app.command("preview-css")
-def preview_css(input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False)) -> None:
+def preview_css(
+    input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False),
+) -> None:
     xml = build_blogger_xml(parse_html_file(input))
     start = xml.find("<![CDATA[")
     end = xml.find("]]>", start)
@@ -279,7 +301,9 @@ def preview_html_cmd(
 
 @app.command("product")
 def product_cmd(
-    source_ref: str = typer.Argument(..., help="Local HTML/image path or URL, depending on --source."),
+    source_ref: str = typer.Argument(
+        ..., help="Local HTML/image path or URL, depending on --source."
+    ),
     source: str = typer.Option("html", "--source", "-s", help="Input mode: html | url | image."),
     out_dir: Path | None = typer.Option(None, "--out-dir", "-o", help="Bundle output directory."),
     template: str = typer.Option("simple", "--template", "-t"),
@@ -360,12 +384,62 @@ def serve_cmd(
     try:
         import uvicorn
     except ImportError as exc:
-        console.print("[red]Install API extra:[/red] pip install -e \".[api]\"")
+        console.print('[red]Install API extra:[/red] pip install -e ".[api]"')
         raise typer.Exit(1) from exc
     console.print(f"Serving http://{host}:{port}/health")
     uvicorn.run("bloggereasy.api.app:app", host=host, port=port, log_level="info")
 
 
+@gen_app.command("multipage")
+def gen_multipage(
+    input: Path = typer.Option(
+        ...,
+        "--input",
+        "-i",
+        exists=True,
+        dir_okay=False,
+        help="HTML source file for design extraction.",
+    ),
+    out_dir: Path | None = typer.Option(
+        None, "--out-dir", "-o", help="Output directory (default: out/multipage/<name>)."
+    ),
+    template: str = typer.Option("simple", "--template", "-t"),
+) -> None:
+    """Generate a coordinated multi-page theme set (home + about + contact)."""
+    from bloggereasy.integrations.sdk import generate_from_html
+    from bloggereasy.theme.multipage import generate_multipage
+
+    base_result = generate_from_html(input, Path("/dev/null"), template=template)
+    base_structure = base_result["structure"]
+
+    target = out_dir or (OUT_DIR / "multipage" / input.stem)
+    manifest = generate_multipage(base_structure, target, template=template)
+
+    console.print(f"[green]Multi-page set ready[/green] → {target}")
+    table = Table(title="Multi-page theme set")
+    table.add_column("Page")
+    table.add_column("File")
+    table.add_column("Bytes", justify="right")
+    table.add_column("Valid")
+    for page_type, info in manifest["pages"].items():
+        table.add_row(
+            page_type,
+            info["file"],
+            str(info["bytes"]),
+            "✓" if info["validation"]["ok"] else "✗",
+        )
+    console.print(table)
+    console.print_json(
+        data={
+            "multipage_version": manifest["multipage_version"],
+            "template": manifest["template"],
+            "validation_ok": manifest["validation_ok"],
+            "shared_design": manifest["shared_design"],
+        }
+    )
+    if not manifest["validation_ok"]:
+        raise typer.Exit(1)
+
+
 if __name__ == "__main__":
     app()
-
