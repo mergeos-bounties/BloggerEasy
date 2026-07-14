@@ -163,7 +163,9 @@ def gen_html(
     timeout: float = typer.Option(15.0, "--timeout", min=1.0, help="URL fetch timeout in seconds."),
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
+    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
 ) -> None:
+    _validate_widgets(widgets)
     if (input is None) == (url is None):
         console.print("[red]Provide exactly one of --input or --url[/red]")
         raise typer.Exit(1)
@@ -175,12 +177,12 @@ def gen_html(
         except RuntimeError as exc:
             console.print(f"[red]{exc}[/red]")
             raise typer.Exit(1) from exc
-        result = generate_from_html_string(html, out_path, template=template)
+        result = generate_from_html_string(html, out_path, template=template, widgets=widgets)
         result["url"] = url
     else:
         assert input is not None
         out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}.xml")
-        result = generate_from_html(input, out_path, template=template)
+        result = generate_from_html(input, out_path, template=template, widgets=widgets)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={
@@ -197,10 +199,12 @@ def gen_url(
     url: str = typer.Option(..., "--url", "-u"),
     out: Path | None = typer.Option(None, "--out", "-o"),
     template: str = typer.Option("simple", "--template", "-t"),
+    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
 ) -> None:
     out_path = out or (OUT_DIR / "from_url.xml")
+    _validate_widgets(widgets)
     try:
-        result = generate_from_url(url, out_path, template=template, cache_dir=OUT_DIR)
+        result = generate_from_url(url, out_path, template=template, cache_dir=OUT_DIR, widgets=widgets)
     except RuntimeError as exc:
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
@@ -214,9 +218,11 @@ def gen_image(
     out: Path | None = typer.Option(None, "--out", "-o"),
     title: str = typer.Option("My Blog", "--title"),
     template: str = typer.Option("from-image", "--template", "-t"),
+    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
 ) -> None:
     out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}-image.xml")
-    result = generate_from_image(input, out_path, title=title, template=template)
+    _validate_widgets(widgets)
+    result = generate_from_image(input, out_path, title=title, template=template, widgets=widgets)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
     console.print_json(
         data={
@@ -236,6 +242,12 @@ def preview_css(input: Path = typer.Option(..., "--input", "-i", exists=True, di
         console.print(xml[start + 9 : end].strip())
     else:
         console.print("[yellow]No skin CDATA found[/yellow]")
+
+
+def _validate_widgets(widgets: str) -> None:
+    if widgets not in {"default", "minimal", "full"}:
+        console.print("[red]--widgets must be one of: default, minimal, full[/red]")
+        raise typer.Exit(1)
 
 
 @gen_app.command("preview-html")
