@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Service Status</title>
+  <meta name="description" content="Status page HTML fixture for BloggerEasy" />
+  <style>
+    body { margin:0; font-family:system-ui,sans-serif; background:#0b1220; color:#e2e8f0; }
+    header { padding:2rem 1.25rem; border-bottom:1px solid #1e293b; }
+    header h1 { margin:0; font-size:1.5rem; }
+    main { max-width:720px; margin:0 auto; padding:1.5rem 1.25rem 3rem; }
+    .row { display:flex; justify-content:space-between; align-items:center;
+      background:#111827; border:1px solid #1f2937; border-radius:10px; padding:.85rem 1rem; margin:.6rem 0; }
+    .ok { color:#34d399; font-weight:700; font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; }
+    .deg { color:#fbbf24; font-weight:700; font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; }
+    footer { text-align:center; color:#64748b; font-size:.85rem; padding:2rem; }
+  </style>
+</head>
+<body>
+  <header><h1>System status</h1><p>All systems sample for theme export</p></header>
+  <main>
+    <div class="row"><span>API gateway</span><span class="ok">Operational</span></div>
+    <div class="row"><span>Ledger / Scan</span><span class="ok">Operational</span></div>
+    <div class="row"><span>Realtime feed</span><span class="deg">Degraded</span></div>
+  </main>
+  <footer>Demo HTML · BloggerEasy status_page</footer>
+</body>
+</html>
