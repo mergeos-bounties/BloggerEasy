@@ -2,7 +2,7 @@ from __future__ import annotations
 
 PRESETS: dict[str, dict] = {
     "simple": {"layout_hint": "auto", "dark": False},
-    "magazine": {"layout_hint": "two-column", "dark": False, "dense": True},
+    "magazine": {"layout_hint": "three-column", "dark": False, "dense": True},
     "dark": {"layout_hint": "two-column", "dark": True},
     "from-image": {"layout_hint": "two-column", "dark": False},
     "portfolio": {
@@ -59,10 +59,12 @@ PRESETS: dict[str, dict] = {
 def apply_preset(structure: dict, template: str) -> dict:
     preset = PRESETS.get(template, PRESETS["simple"])
     out = dict(structure)
-    if preset.get("layout_hint") == "two-column":
-        out["layout"] = "two-column"
+    if preset.get("layout_hint") in {"two-column", "three-column"}:
+        out["layout"] = preset["layout_hint"]
         feats = dict(out.get("features") or {})
         feats["sidebar"] = True
+        if preset.get("layout_hint") == "three-column":
+            feats["magazine_left_rail"] = True
         out["features"] = feats
     if preset.get("dark"):
         colors = dict(out.get("colors") or {})
