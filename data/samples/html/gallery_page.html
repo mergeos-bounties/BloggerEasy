@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Gallery</title>
+  <meta name="description" content="Gallery HTML fixture for BloggerEasy" />
+  <style>
+    body { margin:0; font-family:system-ui,sans-serif; background:#0b1220; color:#e2e8f0; }
+    header { padding:2rem 1.25rem; border-bottom:1px solid #1e293b; }
+    main { max-width:960px; margin:0 auto; padding:1.5rem;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem; }
+    .tile { aspect-ratio:1; border-radius:12px; background:linear-gradient(135deg,#1e293b,#334155);
+      display:flex; align-items:end; padding:.75rem; font-size:.85rem; color:#94a3b8; }
+    footer { text-align:center; color:#64748b; font-size:.85rem; padding:2rem; }
+  </style>
+</head>
+<body>
+  <header><h1>Photo gallery</h1><p>Sample grid for theme export</p></header>
+  <main>
+    <div class="tile">Shot A</div><div class="tile">Shot B</div>
+    <div class="tile">Shot C</div><div class="tile">Shot D</div>
+    <div class="tile">Shot E</div><div class="tile">Shot F</div>
+  </main>
+  <footer>Demo HTML · BloggerEasy gallery_page</footer>
+</body>
+</html>
