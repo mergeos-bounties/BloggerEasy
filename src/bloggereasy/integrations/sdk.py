@@ -7,6 +7,7 @@ from bloggereasy.parse.fetch import fetch_html_url, save_html
 from bloggereasy.parse.html_page import parse_html_file, parse_html_string
 from bloggereasy.theme.builder import build_blogger_xml
 from bloggereasy.theme.presets import apply_dark_variant, apply_preset
+from bloggereasy.theme.preview import write_preview_html
 from bloggereasy.theme.validate import validate_blogger_xml
 from bloggereasy.vision.palette import structure_from_image
 
@@ -32,11 +33,14 @@ def _build(
     xml = build_blogger_xml(structure, template_name=template)
     validation = validate_blogger_xml(xml)
     path = write_theme(xml, out_path)
+    preview_path = write_preview_html(structure, out_path.with_suffix(".preview.html"))
     return {
         "integration_version": "bloggereasy.sdk.v1",
         "structure": structure,
         "output": str(path),
+        "preview_output": str(preview_path),
         "bytes": path.stat().st_size,
+        "preview_bytes": preview_path.stat().st_size,
         "validation": validation,
         "import_hint": "Blogger \u2192 Theme \u2192 Backup/Restore \u2192 Upload XML",
     }
