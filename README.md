@@ -133,6 +133,22 @@ Respect robots.txt, site Terms of Service, and rate limits when fetching public 
 
 ---
 
+## Hướng dẫn nhanh tiếng Việt
+
+BloggerEasy có thể tạo theme Blogger từ HTML cục bộ, URL công khai hoặc ảnh thiết kế.
+Mẫu tiếng Việt nằm tại `data/samples/html/vietnamese_blog.html` và dùng để kiểm tra
+tiêu đề, dấu tiếng Việt, màu sắc và liên kết điều hướng.
+
+```powershell
+bloggereasy gen html -i data/samples/html/vietnamese_blog.html -t simple -o data/out/vietnamese_blog.xml
+bloggereasy validate -f data/out/vietnamese_blog.xml
+```
+
+Sau khi xuất XML, mở Blogger → Theme → Backup/Restore → Upload để nhập theme.
+Luôn sao lưu theme hiện tại trước khi upload.
+
+---
+
 ## CLI reference
 
 | Command | Purpose |
