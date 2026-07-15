@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FAQ Accordion</title>
+  <meta name="description" content="FAQ accordion HTML fixture for BloggerEasy" />
+  <style>
+    body { margin:0; font-family:system-ui,sans-serif; background:#fff; color:#0f172a; }
+    header { max-width:720px; margin:0 auto; padding:2.5rem 1.25rem 1rem; }
+    main { max-width:720px; margin:0 auto; padding:0 1.25rem 3rem; }
+    details { border:1px solid #e2e8f0; border-radius:10px; padding:.9rem 1rem; margin:.65rem 0; background:#f8fafc; }
+    summary { font-weight:600; cursor:pointer; }
+    details p { margin:.65rem 0 0; color:#475569; line-height:1.5; }
+    footer { text-align:center; color:#94a3b8; font-size:.85rem; padding:2rem; }
+  </style>
+</head>
+<body>
+  <header><h1>FAQ</h1><p>Sample accordion for theme export</p></header>
+  <main>
+    <details open><summary>How do I export a theme?</summary>
+      <p>Run bloggereasy gen against a local HTML fixture or public URL.</p></details>
+    <details><summary>Are fixtures offline?</summary>
+      <p>Yes — data/samples/html works without network.</p></details>
+    <details><summary>What is a theme pack bounty?</summary>
+      <p>Ship HTML fixture + screenshot evidence + PR with Fixes #N.</p></details>
+  </main>
+  <footer>Demo HTML · BloggerEasy faq_accordion_page</footer>
+</body>
+</html>
