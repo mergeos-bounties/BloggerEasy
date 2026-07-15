@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bloggereasy"
-version = "0.3.39"
+version = "0.3.40"
 description = "BloggerEasy: generate usable Blogger XML themes from HTML pages, URLs, or design images"
 readme = "README.md"
 requires-python = ">=3.11"
