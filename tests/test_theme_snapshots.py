@@ -15,6 +15,7 @@ def test_dark_and_magazine_generate_valid_xml(tmp_path: Path) -> None:
         ("resume_cv.html", "simple"),
         ("product_launch.html", "dark"),
         ("newsletter.html", "simple"),
+        ("newsletter_signup_page.html", "simple"),
     ]
     for name, tmpl in cases:
         src = samples / name

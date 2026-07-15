@@ -37,3 +37,19 @@ def test_parse_expanded_layout_fixtures() -> None:
         assert structure["features"]["nav_count"] >= 3
         assert structure["features"]["footer"] is True
         assert structure["colors"]["primary"].startswith("#")
+
+
+def test_parse_newsletter_signup_page_fixture() -> None:
+    sample = SAMPLES / "newsletter_signup_page.html"
+
+    assert sample.is_file()
+
+    structure = parse_html_file(sample)
+
+    assert structure["title"] == "Lettersmith Launch List"
+    assert structure["layout"] == "single-column"
+    assert structure["features"]["header"] is True
+    assert structure["features"]["footer"] is True
+    assert structure["features"]["nav_count"] >= 3
+    assert "Join the launch list" in structure["headings"]
+    assert any("weekly field notes" in paragraph for paragraph in structure["sample_paragraphs"])

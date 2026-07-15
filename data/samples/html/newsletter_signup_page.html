@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lettersmith Launch List</title>
+  <meta name="description" content="Newsletter signup landing page sample for BloggerEasy offline generation tests" />
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #5b667a;
+      --paper: #ffffff;
+      --wash: #f6f1e8;
+      --line: #ded6c7;
+      --accent: #d14b2f;
+      --accent-dark: #8e2f1f;
+      --blue: #245d8f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--wash);
+      line-height: 1.6;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    nav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      margin-left: 1rem;
+    }
+
+    .brand {
+      color: var(--accent-dark);
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 4rem 1.25rem 2.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 11ch;
+      margin: 0.35rem 0 1rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      line-height: 0.95;
+    }
+
+    .lead {
+      max-width: 36rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .signup-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      box-shadow: 0 18px 45px rgba(23, 32, 51, 0.12);
+      padding: 1.5rem;
+    }
+
+    .signup-card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.45rem;
+    }
+
+    .signup-card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      margin-bottom: 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 0.45rem;
+      padding: 0.8rem 0.85rem;
+      font: inherit;
+      color: var(--ink);
+      background: #fffdf9;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 0.45rem;
+      padding: 0.85rem 1rem;
+      background: var(--accent);
+      color: #fffaf5;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    .note {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .proof {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .proof article {
+      background: #fffaf5;
+      border: 1px solid var(--line);
+      border-radius: 0.6rem;
+      padding: 1.2rem;
+    }
+
+    .proof h3 {
+      margin: 0 0 0.45rem;
+      color: var(--accent-dark);
+    }
+
+    .proof p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      background: #fffaf5;
+    }
+
+    @media (max-width: 760px) {
+      nav { align-items: flex-start; flex-direction: column; }
+      nav a { margin: 0 1rem 0 0; }
+      .hero { grid-template-columns: 1fr; padding-top: 2.5rem; }
+      .proof { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <a class="brand" href="#">Lettersmith</a>
+      <div>
+        <a href="#issues">Issues</a>
+        <a href="#notes">Notes</a>
+        <a href="#signup">Sign up</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="signup-title">
+      <div>
+        <p class="eyebrow">Independent publishing lab</p>
+        <h1 id="signup-title">Join the launch list</h1>
+        <p class="lead">Get weekly field notes on durable writing systems, tiny editorial workflows, and practical launch checklists for solo publishers.</p>
+      </div>
+
+      <form class="signup-card" id="signup" action="#" method="post">
+        <h2>Start with the next issue</h2>
+        <p>One concise email every Friday. No ads, no trackers, no surprise sequences.</p>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" placeholder="Riley Stone" />
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="riley@example.com" />
+        <button type="submit">Reserve my seat</button>
+        <div class="note">By joining, you agree to receive the Lettersmith newsletter. Unsubscribe anytime.</div>
+      </form>
+    </section>
+
+    <section class="proof" id="issues" aria-label="Newsletter highlights">
+      <article>
+        <h3>Field-tested prompts</h3>
+        <p>Short prompts that turn scattered research into a publishable outline.</p>
+      </article>
+      <article id="notes">
+        <h3>Template teardown</h3>
+        <p>Annotated examples for landing pages, welcome notes, and first-week launch mail.</p>
+      </article>
+      <article>
+        <h3>Reader-first metrics</h3>
+        <p>Simple checks for replies, saves, referrals, and useful edits after each send.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>Demo HTML · BloggerEasy newsletter_signup_page</footer>
+</body>
+</html>
