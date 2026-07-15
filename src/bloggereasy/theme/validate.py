@@ -9,11 +9,12 @@ B_NS = "http://www.google.com/2005/gml/b"
 
 
 def _has_namespace(xml: str, namespace: str) -> bool:
-    pattern = rf"xmlns(?::[a-zA-Z0-9_-]+)?\s*=\s*(['\"]){re.escape(namespace)}\1"
+    escaped_ns = re.escape(namespace)
+    pattern = "xmlns(?::[a-zA-Z0-9_-]+)?\\s*=\\s*(['\\\"])\\b" + escaped_ns + "\\b\\1"
     return re.search(pattern, xml, flags=re.IGNORECASE) is not None
 
 
-def validate_blogger_xml(xml: str) -> dict:
+def validate_blogger_xml(xml: str, *, strict: bool = False) -> dict:
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -44,16 +45,38 @@ def validate_blogger_xml(xml: str) -> dict:
         warnings.append("no Header widget title found")
     if len(xml) < 800:
         warnings.append("theme XML is unusually small")
+
+    # Strict mode: additional checks
+    if strict:
+        xml_bytes = len(xml.encode("utf-8"))
+        if xml_bytes < 2000:
+            errors.append("strict: theme XML below 2000 byte floor (likely incomplete)")
+        if "<b:includable" not in xml:
+            errors.append("strict: missing <b:includable> blocks (widget templates incomplete)")
+        if "CDATA" not in xml:
+            errors.append("strict: missing CDATA skin block (CSS not properly wrapped)")
+        if "<head>" not in xml.lower():
+            errors.append("strict: missing <head> element")
+        if "viewport" not in xml.lower():
+            warnings.append("strict: no viewport meta tag (responsive breakpoints may fail)")
+        if "charset" not in xml.lower():
+            errors.append("strict: missing charset declaration")
+        if not re.search(r"<meta\b[^>]*\bog:title\b", xml, flags=re.IGNORECASE):
+            warnings.append("strict: missing og:title meta tag (social sharing preview degraded)")
+        if len(re.findall(r"<b:section\b", xml)) < 3:
+            warnings.append("strict: fewer than 3 <b:section> blocks (layout may be sparse)")
+
     return {
         "ok": len(errors) == 0,
         "errors": errors,
         "warnings": warnings,
         "bytes": len(xml.encode("utf-8")),
+        "strict": strict,
     }
 
 
-def validate_theme_file(path: Path) -> dict:
+def validate_theme_file(path: Path, *, strict: bool = False) -> dict:
     xml = path.read_text(encoding="utf-8", errors="replace")
-    result = validate_blogger_xml(xml)
+    result = validate_blogger_xml(xml, strict=strict)
     result["path"] = str(path)
     return result
