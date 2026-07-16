@@ -401,7 +401,9 @@ class MainWindow(QMainWindow):
             self.out_edit.setText(str(OUT_DIR / f"{self._html_path.stem}.xml"))
 
     def _pick_sample(self) -> None:
-        samples = sorted((SAMPLES_DIR / "html").glob("*.html")) if (SAMPLES_DIR / "html").exists() else []
+        samples = (
+            sorted((SAMPLES_DIR / "html").glob("*.html")) if (SAMPLES_DIR / "html").exists() else []
+        )
         if not samples:
             QMessageBox.information(self, "BloggerEasy", "No samples under data/samples/html")
             return
@@ -661,9 +663,7 @@ class MainWindow(QMainWindow):
         root = OUT_DIR / "demo"
         root.mkdir(parents=True, exist_ok=True)
         samples = (
-            sorted((SAMPLES_DIR / "html").glob("*.html"))
-            if (SAMPLES_DIR / "html").exists()
-            else []
+            sorted((SAMPLES_DIR / "html").glob("*.html")) if (SAMPLES_DIR / "html").exists() else []
         )
         self.demo_log.clear()
         if not samples:

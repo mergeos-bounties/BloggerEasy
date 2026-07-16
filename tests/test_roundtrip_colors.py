@@ -58,8 +58,9 @@ def test_core_colors_present_in_skin(colors: dict) -> None:
 @pytest.mark.parametrize("template", list(PRESETS))
 def test_effective_primary_survives_every_preset(template: str) -> None:
     """After apply_preset, whatever primary the preset resolves to must be in the skin."""
-    base = _structure({"primary": "#ab12cd", "secondary": "#123456",
-                        "background": "#fdfdfd", "text": "#010203"})
+    base = _structure(
+        {"primary": "#ab12cd", "secondary": "#123456", "background": "#fdfdfd", "text": "#010203"}
+    )
     resolved = apply_preset(base, template)
     xml = build_blogger_xml(resolved, template_name=template)
     skin = _skin_cdata(xml).lower()

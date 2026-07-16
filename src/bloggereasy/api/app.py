@@ -30,10 +30,7 @@ def index() -> str:
     index_html = _STATIC_DIR / "index.html"
     if index_html.exists():
         return index_html.read_text(encoding="utf-8")
-    return (
-        "<h1>BloggerEasy</h1>"
-        "<p>POST to /gen/html or /gen/image. See /docs for the API.</p>"
-    )
+    return "<h1>BloggerEasy</h1><p>POST to /gen/html or /gen/image. See /docs for the API.</p>"
 
 
 class HtmlGenRequest(BaseModel):
@@ -44,7 +41,12 @@ class HtmlGenRequest(BaseModel):
 
 @app.get("/health")
 def health() -> dict:
-    return {"ok": True, "service": "bloggereasy", "version": __version__, "templates": list(PRESETS)}
+    return {
+        "ok": True,
+        "service": "bloggereasy",
+        "version": __version__,
+        "templates": list(PRESETS),
+    }
 
 
 @app.post("/gen/html")

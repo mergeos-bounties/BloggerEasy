@@ -16,7 +16,13 @@ def validate_theme_dir(directory: Path) -> dict:
         ok = bool(result.get("ok"))
         if ok:
             ok_n += 1
-        rows.append({"file": path.name, "ok": ok, "issues": result.get("issues") or result.get("errors") or []})
+        rows.append(
+            {
+                "file": path.name,
+                "ok": ok,
+                "issues": result.get("issues") or result.get("errors") or [],
+            }
+        )
     return {
         "dir": str(directory),
         "n": len(files),

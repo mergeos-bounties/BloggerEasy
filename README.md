@@ -5,6 +5,7 @@
 [![Qt GUI](https://img.shields.io/badge/GUI-PySide6-41CD52.svg)](src/bloggereasy/gui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![MergeOS](https://img.shields.io/badge/MergeOS-bounties-5319E7.svg)](https://github.com/mergeos-bounties)
+[![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen.svg?style=flat)](https://github.com/mergeos-bounties/BloggerEasy/actions)
 
 **BloggerEasy** turns a **website URL** or a **design image** into an **importable Blogger XML theme** — layout, CSS skin, sections, and widgets ready for Blogger → Theme → Backup/Restore → Upload.
 

@@ -87,7 +87,9 @@ def _extract_colors(html: str) -> dict:
             norm.append(h)
     primary = norm[0] if norm else "#1a73e8"
     secondary = norm[1] if len(norm) > 1 else "#34a853"
-    background = next((c for c in norm if c in {"#ffffff", "#fff", "#fafafa", "#f5f5f5"}), "#ffffff")
+    background = next(
+        (c for c in norm if c in {"#ffffff", "#fff", "#fafafa", "#f5f5f5"}), "#ffffff"
+    )
     if background == "#fff":
         background = "#ffffff"
     text = next((c for c in norm if c in {"#000000", "#111111", "#222222", "#333333"}), "#222222")

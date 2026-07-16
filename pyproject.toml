@@ -22,6 +22,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+  "pytest-cov>=4.1",
   "ruff>=0.4",
 ]
 gui = [
@@ -52,3 +53,11 @@ pythonpath = ["src"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.coverage.run]
+source = ["bloggereasy"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true

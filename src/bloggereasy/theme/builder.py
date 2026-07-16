@@ -52,8 +52,7 @@ def build_blogger_xml(structure: PageStructure | dict, *, template_name: str = "
     )
     if not nav_html:
         nav_html = (
-            '<li><a expr:href="data:blog.homepageUrl">Home</a></li>'
-            '<li><a href="#">About</a></li>'
+            '<li><a expr:href="data:blog.homepageUrl">Home</a></li><li><a href="#">About</a></li>'
         )
     nav_widget = _nav_linklist_widget(nav)
 

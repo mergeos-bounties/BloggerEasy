@@ -38,7 +38,9 @@ def _extract_fonts(css: str) -> dict[str, str]:
 def _extract_spacing(css: str) -> dict[str, str]:
     return {
         "section_padding": _first_css_value(css, "padding", "1rem"),
-        "card_padding": _first_css_value(css, "padding", "1rem 1.25rem", selector_hint="card|post|article"),
+        "card_padding": _first_css_value(
+            css, "padding", "1rem 1.25rem", selector_hint="card|post|article"
+        ),
         "gap": _first_css_value(css, "gap", "1.5rem"),
         "radius": _first_css_value(css, "border-radius", "8px"),
     }
