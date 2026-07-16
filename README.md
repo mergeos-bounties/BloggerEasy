@@ -42,7 +42,7 @@ Image ─┘
 | **URL → theme** | Fetch a public page → structure → validated Blogger XML |
 | **Image → theme** | Sample palette from a mockup/screenshot → theme skin |
 | **HTML file** | Offline local HTML samples or your own page |
-| **Templates** | `simple`, `portfolio`, `news`, `dark`, `magazine`, `from-image` |
+| **Templates** | `simple`, `portfolio`, `news`, `dark`, `magazine`, `docs`, `from-image` |
 | **Desktop GUI** | Modern **PySide6** app (`bloggereasy-gui`) |
 | **Validate** | Check theme XML before upload |
 | **Offline demo** | `bloggereasy demo` batch-generates all bundled samples |
@@ -173,6 +173,7 @@ Luôn sao lưu theme hiện tại trước khi upload.
 | `portfolio` | Portfolio / personal brand |
 | `news` | Dense editorial |
 | `magazine` | Magazine-style two-column |
+| `docs` | Documentation-style sidebar + article layout |
 | `dark` | Dark developer look |
 | `from-image` | Image palette (auto for image mode) |
 
