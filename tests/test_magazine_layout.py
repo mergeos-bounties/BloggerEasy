@@ -46,3 +46,24 @@ def test_cli_magazine_template_works(tmp_path: Path) -> None:
     xml = out.read_text(encoding="utf-8")
     assert "id='magazine-left'" in xml
     assert "type='Blog'" in xml
+
+
+def test_cli_gen_shortcut_magazine_template_works_offline(tmp_path: Path) -> None:
+    out = tmp_path / "shortcut-magazine.xml"
+    result = runner.invoke(
+        app,
+        [
+            "gen",
+            "--template",
+            "magazine",
+            "--out",
+            str(out),
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    xml = out.read_text(encoding="utf-8")
+    assert "grid-template-columns: 220px 1fr 260px" in xml
+    assert "id='magazine-left'" in xml
+    assert "type='Blog'" in xml
+    assert validate_theme_file(out)["ok"] is True

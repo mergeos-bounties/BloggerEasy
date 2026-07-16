@@ -151,6 +151,47 @@ def templates_list() -> None:
     console.print(table)
 
 
+@gen_app.callback(invoke_without_command=True)
+def gen_shortcut(
+    ctx: typer.Context,
+    template: str | None = typer.Option(
+        None,
+        "--template",
+        "-t",
+        help="Generate from the bundled sample for a template, for example magazine.",
+    ),
+    out: Path | None = typer.Option(None, "--out", "-o"),
+    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
+) -> None:
+    """Generate an XML theme from a bundled sample when no gen subcommand is used."""
+    if ctx.invoked_subcommand is not None:
+        return
+    if template is None and out is None and widgets == "default" and not dark:
+        console.print(ctx.get_help())
+        raise typer.Exit()
+
+    template_name = template or "simple"
+    _validate_widgets(widgets)
+    input_path = _sample_for_template(template_name)
+    out_path = out or (OUT_DIR / f"{sanitize_filename(template_name)}.xml")
+    result = generate_from_html(input_path, out_path, template=template_name, widgets=widgets, dark=dark)
+    console.print(
+        f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes) "
+        f"from {input_path.name}"
+    )
+    console.print_json(
+        data={
+            "template": template_name,
+            "sample": str(input_path),
+            "title": result["structure"]["title"],
+            "layout": result["structure"]["layout"],
+            "validation": result["validation"],
+            "import_hint": result["import_hint"],
+        }
+    )
+
+
 @parse_app.command("html")
 def parse_html(input: Path = typer.Option(..., "--input", "-i", exists=True, dir_okay=False)) -> None:
     console.print_json(data=parse_html_file(input))
@@ -258,6 +299,30 @@ def _validate_widgets(widgets: str) -> None:
     if widgets not in {"default", "minimal", "full"}:
         console.print("[red]--widgets must be one of: default, minimal, full[/red]")
         raise typer.Exit(1)
+
+
+def _sample_for_template(template: str) -> Path:
+    sample_map = {
+        "dark": "dark_dev.html",
+        "docs": "docs_blog.html",
+        "food_recipe": "food_recipe.html",
+        "from-image": "portfolio.html",
+        "magazine": "magazine.html",
+        "magazine_news": "magazine_news.html",
+        "news": "news_portal.html",
+        "personal": "minimal_blog.html",
+        "portfolio": "portfolio.html",
+        "portfolio_photo": "portfolio_photo.html",
+        "simple": "minimal_blog.html",
+    }
+    if template not in PRESETS:
+        console.print(f"[red]Unknown template '{template}'. Run `bloggereasy templates list`.[/red]")
+        raise typer.Exit(1)
+    path = SAMPLES_DIR / "html" / sample_map.get(template, "minimal_blog.html")
+    if not path.is_file():
+        console.print(f"[red]Bundled sample not found for template '{template}': {path}[/red]")
+        raise typer.Exit(1)
+    return path
 
 
 @gen_app.command("preview-html")
@@ -368,4 +433,3 @@ def serve_cmd(
 
 if __name__ == "__main__":
     app()
-
