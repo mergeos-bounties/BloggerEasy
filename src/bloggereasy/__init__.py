@@ -1,3 +1,3 @@
 """BloggerEasy: generate Blogger themes from HTML or images."""
 
-__version__ = "0.3.52"
+__version__ = "0.3.53"
