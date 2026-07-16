@@ -6,11 +6,22 @@ from pathlib import Path
 
 XHTML_NS = "http://www.w3.org/1999/xhtml"
 B_NS = "http://www.google.com/2005/gml/b"
+_EXTERNAL_ASSET_RE = re.compile(
+    r"<(?P<tag>img|script)\b[^>]*\bsrc\s*=\s*(?P<quote>['\"])(?P<url>https?://[^'\"]+)(?P=quote)",
+    flags=re.IGNORECASE,
+)
 
 
 def _has_namespace(xml: str, namespace: str) -> bool:
     pattern = rf"xmlns(?::[a-zA-Z0-9_-]+)?\s*=\s*(['\"]){re.escape(namespace)}\1"
     return re.search(pattern, xml, flags=re.IGNORECASE) is not None
+
+
+def _external_asset_warnings(xml: str) -> list[str]:
+    return [
+        f"external {match.group('tag').lower()} asset URL: {match.group('url').strip()}"
+        for match in _EXTERNAL_ASSET_RE.finditer(xml)
+    ]
 
 
 def validate_blogger_xml(xml: str) -> dict:
@@ -44,6 +55,7 @@ def validate_blogger_xml(xml: str) -> dict:
         warnings.append("no Header widget title found")
     if len(xml) < 800:
         warnings.append("theme XML is unusually small")
+    warnings.extend(_external_asset_warnings(xml))
     return {
         "ok": len(errors) == 0,
         "errors": errors,
