@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Team Grid</title>
+  <title>Team</title>
   <meta name="description" content="Team grid HTML fixture for BloggerEasy" />
   <style>
-    body { margin:0; font-family:system-ui,sans-serif; background:#0b1220; color:#e2e8f0; }
-    header { text-align:center; padding:2.5rem 1rem 1rem; }
-    main { max-width:900px; margin:0 auto; padding:1rem 1.25rem 3rem;
-      display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-    .card { background:#111827; border:1px solid #1f2937; border-radius:14px; padding:1.2rem; text-align:center; }
-    .avatar { width:64px; height:64px; border-radius:50%; margin:0 auto .75rem;
-      background:linear-gradient(135deg,#38bdf8,#818cf8); }
-    .card h2 { margin:0 0 .25rem; font-size:1.05rem; }
-    .card p { margin:0; color:#94a3b8; font-size:.9rem; }
-    footer { text-align:center; color:#64748b; font-size:.85rem; padding:2rem; }
+    body { margin:0; font-family:system-ui,sans-serif; background:#0f172a; color:#e2e8f0; }
+    header { text-align:center; padding:2rem 1rem .5rem; }
+    main { max-width:900px; margin:0 auto; padding:1rem 1.25rem 2.5rem;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+    .card { background:#1e293b; border-radius:12px; padding:1.25rem; text-align:center;
+      border:1px solid #334155; }
+    .card h3 { margin:.5rem 0 .25rem; font-size:1rem; }
+    .card p { margin:0; color:#94a3b8; font-size:.85rem; }
+    .avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#38bdf8,#818cf8);
+      margin:0 auto; }
+    footer { text-align:center; color:#64748b; font-size:.8rem; padding:1.5rem; }
   </style>
 </head>
 <body>
-  <header><h1>Our team</h1><p>Sample team grid for theme export</p></header>
+  <header><h1>Our Team</h1><p>Sample team grid for theme export</p></header>
   <main>
-    <div class="card"><div class="avatar"></div><h2>Alex</h2><p>Design</p></div>
-    <div class="card"><div class="avatar"></div><h2>Sam</h2><p>Engineering</p></div>
-    <div class="card"><div class="avatar"></div><h2>Jordan</h2><p>Product</p></div>
+    <div class="card"><div class="avatar"></div><h3>Alex Kim</h3><p>Product</p></div>
+    <div class="card"><div class="avatar"></div><h3>Sam Rivera</h3><p>Engineering</p></div>
+    <div class="card"><div class="avatar"></div><h3>Jordan Lee</h3><p>Design</p></div>
+    <div class="card"><div class="avatar"></div><h3>Casey Wu</h3><p>Support</p></div>
   </main>
   <footer>Demo HTML · BloggerEasy team_grid_page</footer>
 </body>
