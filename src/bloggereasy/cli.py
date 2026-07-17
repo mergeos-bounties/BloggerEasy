@@ -419,12 +419,17 @@ def product_cmd(
 def validate_cmd(
     file: Path | None = typer.Option(None, "--file", "-f", exists=True, dir_okay=False),
     directory: Path | None = typer.Option(None, "--dir", "-d", exists=True, file_okay=False),
+    strict: bool = typer.Option(
+        False,
+        "--strict",
+        help="Require parseable Blogger XML and reject sections without widgets.",
+    ),
 ) -> None:
     """Validate one theme XML or batch-validate a directory of themes."""
     if directory is not None:
         from bloggereasy.theme.batch import validate_theme_dir
 
-        report = validate_theme_dir(directory)
+        report = validate_theme_dir(directory, strict=strict)
         console.print_json(data=report)
         if report["fail"]:
             raise typer.Exit(1)
@@ -432,7 +437,7 @@ def validate_cmd(
     if file is None:
         console.print("[red]Provide --file or --dir[/red]")
         raise typer.Exit(1)
-    result = validate_theme_file(file)
+    result = validate_theme_file(file, strict=strict)
     console.print_json(data=result)
     if not result["ok"]:
         raise typer.Exit(1)

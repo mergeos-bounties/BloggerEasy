@@ -2,10 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from typer.testing import CliRunner
+
+from bloggereasy.cli import app
 from bloggereasy.integrations.sdk import generate_from_html
 from bloggereasy.theme.validate import validate_blogger_xml, validate_theme_file
 
 SAMPLES = Path(__file__).resolve().parents[1] / "data" / "samples" / "html"
+runner = CliRunner()
 
 
 def test_validate_generated(tmp_path: Path) -> None:
@@ -78,3 +82,38 @@ def test_validate_does_not_warn_for_local_image_and_script_assets() -> None:
 
     assert result["ok"] is True
     assert not any("external" in warning for warning in result["warnings"])
+
+
+def test_strict_validation_accepts_well_formed_theme() -> None:
+    result = validate_blogger_xml(_valid_theme_xml(), strict=True)
+
+    assert result["ok"] is True
+    assert result["strict"] is True
+
+
+def test_strict_validation_rejects_empty_section() -> None:
+    xml = _valid_theme_xml('<b:section id="empty" name="Empty"></b:section>')
+
+    result = validate_blogger_xml(xml, strict=True)
+
+    assert result["ok"] is False
+    assert "empty <b:section> is not allowed: empty" in result["errors"]
+
+
+def test_strict_validation_rejects_malformed_xml() -> None:
+    malformed = _valid_theme_xml().replace("</html>", "")
+
+    result = validate_blogger_xml(malformed, strict=True)
+
+    assert result["ok"] is False
+    assert "strict XML parse failed" in result["errors"]
+
+
+def test_validate_cli_forwards_strict_flag(tmp_path: Path) -> None:
+    theme = tmp_path / "theme.xml"
+    theme.write_text(_valid_theme_xml(), encoding="utf-8")
+
+    result = runner.invoke(app, ["validate", "--file", str(theme), "--strict"])
+
+    assert result.exit_code == 0
+    assert '"strict": true' in result.stdout
