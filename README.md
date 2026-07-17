@@ -126,6 +126,9 @@ bloggereasy gen image -i path\to\mockup.png --title "My Blog" -o data/out/from_i
 # From local HTML
 bloggereasy gen html -i data/samples/html/portfolio.html -t portfolio
 
+# From the bundled magazine card-grid template, fully offline
+bloggereasy gen --template magazine --out data/out/magazine.xml
+
 # From a public HTML page through the html command
 bloggereasy gen html --url "https://example.com/" --timeout 10 -t portfolio -o data/out/from_url.xml
 ```
@@ -158,6 +161,7 @@ Luôn sao lưu theme hiện tại trước khi upload.
 | `bloggereasy gui` / `bloggereasy-gui` | **Qt app** (needs `.[gui]`) |
 | `bloggereasy demo` | Themes for all `data/samples/html/*.html` |
 | `bloggereasy templates list` | Built-in presets |
+| `bloggereasy gen --template magazine` | Bundled sample → magazine card-grid XML |
 | `bloggereasy gen url -u …` | URL → XML |
 | `bloggereasy gen image -i …` | Image → XML |
 | `bloggereasy gen html -i …` | HTML file → XML |
@@ -173,7 +177,7 @@ Luôn sao lưu theme hiện tại trước khi upload.
 | `simple` | Clean default blog |
 | `portfolio` | Portfolio / personal brand |
 | `news` | Dense editorial |
-| `magazine` | Magazine-style two-column |
+| `magazine` | Magazine-style card grid with left rail, main posts, and right sidebar |
 | `docs` | Documentation-style sidebar + article layout |
 | `dark` | Dark developer look |
 | `from-image` | Image palette (auto for image mode) |
