@@ -331,6 +331,7 @@ def _sample_for_template(template: str) -> Path:
         "from-image": "portfolio.html",
         "magazine": "magazine.html",
         "magazine_news": "magazine_news.html",
+        "landing": "landing_saas.html",
         "news": "news_portal.html",
         "personal": "minimal_blog.html",
         "portfolio": "portfolio.html",
