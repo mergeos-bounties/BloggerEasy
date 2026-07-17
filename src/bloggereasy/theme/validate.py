@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from lxml import etree
+
 
 XHTML_NS = "http://www.w3.org/1999/xhtml"
 B_NS = "http://www.google.com/2005/gml/b"
@@ -24,7 +26,41 @@ def _external_asset_warnings(xml: str) -> list[str]:
     ]
 
 
-def validate_blogger_xml(xml: str) -> dict:
+def _strict_schema_errors(xml: str) -> list[str]:
+    parser = etree.XMLParser(resolve_entities=False, no_network=True, recover=False)
+    try:
+        root = etree.fromstring(xml.encode("utf-8"), parser=parser)
+    except (etree.XMLSyntaxError, ValueError):
+        return ["strict XML parse failed"]
+
+    errors: list[str] = []
+    if root.tag != f"{{{XHTML_NS}}}html":
+        errors.append("strict root must be XHTML <html>")
+
+    skin_nodes = list(root.iter(f"{{{B_NS}}}skin"))
+    if not skin_nodes:
+        errors.append("strict schema requires a <b:skin> element")
+
+    sections = list(root.iter(f"{{{B_NS}}}section"))
+    if not sections:
+        errors.append("strict schema requires a <b:section> element")
+
+    blog_widgets = [
+        node
+        for node in root.iter(f"{{{B_NS}}}widget")
+        if (node.get("type") or "").strip().lower() == "blog"
+    ]
+    if not blog_widgets:
+        errors.append("strict schema requires a Blog widget")
+
+    for section in sections:
+        if section.find(f".//{{{B_NS}}}widget") is None:
+            section_id = section.get("id") or "<unnamed>"
+            errors.append(f"empty <b:section> is not allowed: {section_id}")
+    return errors
+
+
+def validate_blogger_xml(xml: str, *, strict: bool = False) -> dict:
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -56,16 +92,19 @@ def validate_blogger_xml(xml: str) -> dict:
     if len(xml) < 800:
         warnings.append("theme XML is unusually small")
     warnings.extend(_external_asset_warnings(xml))
+    if strict:
+        errors.extend(_strict_schema_errors(xml))
     return {
         "ok": len(errors) == 0,
         "errors": errors,
         "warnings": warnings,
         "bytes": len(xml.encode("utf-8")),
+        "strict": strict,
     }
 
 
-def validate_theme_file(path: Path) -> dict:
+def validate_theme_file(path: Path, *, strict: bool = False) -> dict:
     xml = path.read_text(encoding="utf-8", errors="replace")
-    result = validate_blogger_xml(xml)
+    result = validate_blogger_xml(xml, strict=strict)
     result["path"] = str(path)
     return result

@@ -165,7 +165,9 @@ def gen_shortcut(
         help="Generate from the bundled sample for a template, for example magazine.",
     ),
     out: Path | None = typer.Option(None, "--out", "-o"),
-    widgets: str = typer.Option("default", "--widgets", help="Sidebar widgets: default, minimal, full."),
+    widgets: str = typer.Option(
+        "default", "--widgets", help="Sidebar widgets: default, minimal, full."
+    ),
     dark: bool = typer.Option(False, "--dark", help="Force dark skin colors."),
 ) -> None:
     """Generate an XML theme from a bundled sample when no gen subcommand is used."""
@@ -179,10 +181,11 @@ def gen_shortcut(
     _validate_widgets(widgets)
     input_path = _sample_for_template(template_name)
     out_path = out or (OUT_DIR / f"{sanitize_filename(template_name)}.xml")
-    result = generate_from_html(input_path, out_path, template=template_name, widgets=widgets, dark=dark)
+    result = generate_from_html(
+        input_path, out_path, template=template_name, widgets=widgets, dark=dark
+    )
     console.print(
-        f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes) "
-        f"from {input_path.name}"
+        f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes) from {input_path.name}"
     )
     console.print_json(
         data={
@@ -338,7 +341,9 @@ def _sample_for_template(template: str) -> Path:
         "simple": "minimal_blog.html",
     }
     if template not in PRESETS:
-        console.print(f"[red]Unknown template '{template}'. Run `bloggereasy templates list`.[/red]")
+        console.print(
+            f"[red]Unknown template '{template}'. Run `bloggereasy templates list`.[/red]"
+        )
         raise typer.Exit(1)
     path = SAMPLES_DIR / "html" / sample_map.get(template, "minimal_blog.html")
     if not path.is_file():
@@ -413,12 +418,17 @@ def product_cmd(
 def validate_cmd(
     file: Path | None = typer.Option(None, "--file", "-f", exists=True, dir_okay=False),
     directory: Path | None = typer.Option(None, "--dir", "-d", exists=True, file_okay=False),
+    strict: bool = typer.Option(
+        False,
+        "--strict",
+        help="Require parseable Blogger XML and reject sections without widgets.",
+    ),
 ) -> None:
     """Validate one theme XML or batch-validate a directory of themes."""
     if directory is not None:
         from bloggereasy.theme.batch import validate_theme_dir
 
-        report = validate_theme_dir(directory)
+        report = validate_theme_dir(directory, strict=strict)
         console.print_json(data=report)
         if report["fail"]:
             raise typer.Exit(1)
@@ -426,7 +436,7 @@ def validate_cmd(
     if file is None:
         console.print("[red]Provide --file or --dir[/red]")
         raise typer.Exit(1)
-    result = validate_theme_file(file)
+    result = validate_theme_file(file, strict=strict)
     console.print_json(data=result)
     if not result["ok"]:
         raise typer.Exit(1)

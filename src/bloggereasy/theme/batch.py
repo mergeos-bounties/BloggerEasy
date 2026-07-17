@@ -7,12 +7,12 @@ from pathlib import Path
 from bloggereasy.theme.validate import validate_theme_file
 
 
-def validate_theme_dir(directory: Path) -> dict:
+def validate_theme_dir(directory: Path, *, strict: bool = False) -> dict:
     files = sorted(directory.glob("*.xml")) if directory.exists() else []
     rows = []
     ok_n = 0
     for path in files:
-        result = validate_theme_file(path)
+        result = validate_theme_file(path, strict=strict)
         ok = bool(result.get("ok"))
         if ok:
             ok_n += 1
@@ -25,6 +25,7 @@ def validate_theme_dir(directory: Path) -> dict:
         )
     return {
         "dir": str(directory),
+        "strict": strict,
         "n": len(files),
         "ok": ok_n,
         "fail": len(files) - ok_n,
