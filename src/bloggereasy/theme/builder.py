@@ -321,15 +321,19 @@ def _landing_sections(structure: dict) -> str:
     if headings and headings[0].casefold() == title_text.casefold():
         headings = headings[1:]
 
-    hero_copy = paragraphs[0] if paragraphs else str(
-        structure.get("description") or "A clear place to introduce your work."
+    hero_copy = (
+        paragraphs[0]
+        if paragraphs
+        else str(structure.get("description") or "A clear place to introduce your work.")
     )
     nav = structure.get("nav_links") or []
     cta_label = str(nav[0].get("label") or "Get started") if nav else "Get started"
     feature_copy = paragraphs[1:]
     cards = []
     for index, heading in enumerate(headings[:3]):
-        copy = feature_copy[index] if index < len(feature_copy) else "Learn more about this feature."
+        copy = (
+            feature_copy[index] if index < len(feature_copy) else "Learn more about this feature."
+        )
         cards.append(
             "<article class='landing-card'>"
             f"<h2>{escape(heading)}</h2><p>{escape(copy)}</p>"
