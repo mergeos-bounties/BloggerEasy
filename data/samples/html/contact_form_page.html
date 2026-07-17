@@ -2,28 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Contact Form</title>
+  <title>Contact</title>
   <meta name="description" content="Contact form HTML fixture for BloggerEasy" />
   <style>
     body { margin:0; font-family:system-ui,sans-serif; background:#f1f5f9; color:#0f172a; }
-    header { max-width:520px; margin:0 auto; padding:2.5rem 1.25rem 1rem; }
-    form { max-width:520px; margin:0 auto; padding:0 1.25rem 3rem; display:grid; gap:.85rem; }
-    label { font-weight:600; font-size:.9rem; display:block; margin-bottom:.3rem; }
-    input, textarea { width:100%; box-sizing:border-box; padding:.7rem .85rem;
-      border:1px solid #cbd5e1; border-radius:10px; font:inherit; background:#fff; }
-    button { justify-self:start; background:#0369a1; color:#fff; border:0; border-radius:10px;
-      padding:.7rem 1.2rem; font-weight:600; cursor:pointer; }
-    footer { text-align:center; color:#94a3b8; font-size:.85rem; padding:2rem; }
+    header { text-align:center; padding:2rem 1rem .5rem; }
+    main { max-width:480px; margin:0 auto; padding:1rem 1.25rem 2.5rem; }
+    form { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; }
+    label { display:block; font-size:.85rem; font-weight:600; margin:.75rem 0 .3rem; }
+    input, textarea { width:100%; box-sizing:border-box; border:1px solid #cbd5e1;
+      border-radius:8px; padding:.55rem .7rem; font:inherit; }
+    button { margin-top:1rem; width:100%; background:#0284c7; color:#fff; border:0;
+      border-radius:8px; padding:.7rem; font-weight:600; cursor:pointer; }
+    footer { text-align:center; color:#94a3b8; font-size:.8rem; padding:1.5rem; }
   </style>
 </head>
 <body>
-  <header><h1>Contact</h1><p>Sample contact form for theme export</p></header>
-  <form action="#" method="post">
-    <div><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your name" /></div>
-    <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" /></div>
-    <div><label for="msg">Message</label><textarea id="msg" name="msg" rows="4" placeholder="How can we help?"></textarea></div>
-    <button type="submit">Send</button>
-  </form>
+  <header><h1>Contact</h1><p>Sample form for theme export</p></header>
+  <main>
+    <form action="#" method="get">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" />
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" />
+      <label for="msg">Message</label>
+      <textarea id="msg" name="msg" rows="4" placeholder="How can we help?"></textarea>
+      <button type="submit">Send message</button>
+    </form>
+  </main>
   <footer>Demo HTML · BloggerEasy contact_form_page</footer>
 </body>
 </html>
