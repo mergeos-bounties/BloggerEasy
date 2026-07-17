@@ -185,6 +185,7 @@ def gen_html(
         out_path = out or (OUT_DIR / f"{sanitize_filename(input.stem)}.xml")
         result = generate_from_html(input, out_path, template=template, widgets=widgets, dark=dark)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
+    console.print(f"[green]Preview[/green] {result['preview_output']}")
     console.print_json(
         data={
             "title": result["structure"]["title"],
@@ -218,6 +219,7 @@ def gen_url(
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
     console.print(f"[green]Wrote[/green] {result['output']}")
+    console.print(f"[green]Preview[/green] {result['preview_output']}")
     console.print_json(data={"title": result["structure"]["title"], "validation": result["validation"]})
 
 
@@ -234,6 +236,7 @@ def gen_image(
     _validate_widgets(widgets)
     result = generate_from_image(input, out_path, title=title, template=template, widgets=widgets, dark=dark)
     console.print(f"[green]Wrote[/green] {result['output']} ({result['bytes']} bytes)")
+    console.print(f"[green]Preview[/green] {result['preview_output']}")
     console.print_json(
         data={
             "title": result["structure"]["title"],
