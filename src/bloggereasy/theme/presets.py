@@ -31,6 +31,13 @@ PRESETS: dict[str, dict] = {
         "dense": True,
         "accent": "#0d9488",
     },
+    "landing": {
+        "layout_hint": "single-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#0ea5e9",
+        "landing": True,
+    },
     "portfolio_photo": {
         "layout_hint": "two-column",
         "dark": False,
@@ -78,6 +85,12 @@ def apply_preset(structure: PageStructure | dict, template: str) -> dict:
         feats = dict(out.get("features") or {})
         feats["dense"] = True
         out["features"] = feats
+    if preset.get("landing"):
+        feats = dict(out.get("features") or {})
+        feats["landing"] = True
+        feats["sidebar"] = False
+        out["features"] = feats
+        out["layout"] = "single-column"
     out["template"] = template
     return out
 

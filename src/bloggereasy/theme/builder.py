@@ -57,6 +57,7 @@ def build_blogger_xml(structure: PageStructure | dict, *, template_name: str = "
     nav_widget = _nav_linklist_widget(nav)
 
     description = escape(str(structure.get("description") or "Powered by BloggerEasy"))
+    landing_sections = _landing_sections(structure) if features.get("landing") else ""
 
     skin_css = f"""
 body {{
@@ -127,8 +128,44 @@ img, iframe, video {{
   color: {footer_text};
   font-size: 0.9rem;
 }}
+.landing-shell {{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 0;
+}}
+.landing-hero {{
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: {muted};
+  border: 1px solid {border};
+  border-radius: {radius};
+}}
+.landing-hero h1 {{
+  margin: 0 0 0.75rem;
+  color: {text};
+  font-family: {heading_font};
+  font-size: 2.4rem;
+}}
+.landing-hero p {{ max-width: 680px; margin: 0 auto 1.5rem; }}
+.landing-cta {{ display: inline-block; text-decoration: none; }}
+.landing-features {{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: {gap};
+  padding: 2rem 0;
+}}
+.landing-card {{
+  padding: {post_pad};
+  background: {surface};
+  border: 1px solid {border};
+  border-radius: {radius};
+}}
+.landing-card h2 {{ margin-top: 0; font-family: {heading_font}; }}
 @media (max-width: 800px) {{
   .content-wrap {{ grid-template-columns: 1fr; }}
+  .landing-features {{ grid-template-columns: 1fr; }}
+  .landing-hero {{ padding: 2rem 1rem; }}
+  .landing-hero h1 {{ font-size: 1.9rem; }}
   .header-inner {{ padding: 1rem; }}
   .header-inner h1 {{ font-size: 1.65rem; line-height: 1.2; }}
   .nav-bar ul {{ gap: 0.45rem; }}
@@ -240,6 +277,8 @@ Template: {escape(template_name)}
     </nav>
   </div>
 
+  {landing_sections}
+
   <div class='content-wrap'>
     {left_rail_section}
     <div class='main-outer'>
@@ -273,6 +312,43 @@ Template: {escape(template_name)}
 </html>
 """
     return xml
+
+
+def _landing_sections(structure: dict) -> str:
+    title_text = str(structure.get("title") or "My Blog")
+    paragraphs = [str(item) for item in structure.get("sample_paragraphs") or [] if item]
+    headings = [str(item) for item in structure.get("headings") or [] if item]
+    if headings and headings[0].casefold() == title_text.casefold():
+        headings = headings[1:]
+
+    hero_copy = (
+        paragraphs[0]
+        if paragraphs
+        else str(structure.get("description") or "A clear place to introduce your work.")
+    )
+    nav = structure.get("nav_links") or []
+    cta_label = str(nav[0].get("label") or "Get started") if nav else "Get started"
+    feature_copy = paragraphs[1:]
+    cards = []
+    for index, heading in enumerate(headings[:3]):
+        copy = (
+            feature_copy[index] if index < len(feature_copy) else "Learn more about this feature."
+        )
+        cards.append(
+            "<article class='landing-card'>"
+            f"<h2>{escape(heading)}</h2><p>{escape(copy)}</p>"
+            "</article>"
+        )
+
+    return (
+        "<div class='landing-shell'>"
+        "<section class='landing-hero'>"
+        f"<h1>{escape(title_text)}</h1><p>{escape(hero_copy)}</p>"
+        f"<a class='button landing-cta' href='#main'>{escape(cta_label)}</a>"
+        "</section>"
+        f"<section class='landing-features'>{''.join(cards)}</section>"
+        "</div>"
+    )
 
 
 def sanitize_filename(name: str) -> str:
