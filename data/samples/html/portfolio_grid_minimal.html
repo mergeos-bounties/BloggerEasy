@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portfolio Grid</title>
+  <meta name="description" content="Minimalist portfolio with grid layout" />
+  <style>
+    body { font-family: 'Helvetica Neue', sans-serif; background: #fafafa; color: #1a1a1a; margin: 0; padding: 0; }
+    header { padding: 3rem 2rem; text-align: center; background: #fff; border-bottom: 1px solid #eee; }
+    h1 { font-weight: 200; letter-spacing: 0.1em; text-transform: uppercase; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    .card { background: #fff; border: 1px solid #eee; padding: 1.5rem; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .card h3 { margin: 0 0 0.5rem; font-weight: 400; }
+    .card .meta { color: #888; font-size: 0.85rem; margin-bottom: 1rem; }
+    footer { text-align: center; padding: 2rem; color: #888; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header><h1>Selected Work</h1></header>
+  <div class="grid">
+    <article class="card"><h3>Project Aurora</h3><div class="meta">2025 — Branding</div><p>Visual identity for a Nordic tech startup.</p></article>
+    <article class="card"><h3>Field Notes</h3><div class="meta">2025 — Editorial</div><p>A weekly publication on slow software.</p></article>
+    <article class="card"><h3>Cartography</h3><div class="meta">2024 — Web</div><p>Interactive maps for hiking trails.</p></article>
+    <article class="card"><h3>Atlas</h3><div class="meta">2024 — Print</div><p>A printed atlas of small islands.</p></article>
+  </div>
+  <footer><p>© Studio Portfolio — 2026</p></footer>
+</body>
+</html>
