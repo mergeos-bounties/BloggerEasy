@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://schemas.google.com/blogger/2008'>
+<head>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <title>Portfolio Grid Minimal</title>
+  <meta content='text/html; charset=utf-8' http-equiv='Content-Type'/>
+  <b:skin><![CDATA[/*
+===============================================
+Minimal Portfolio Grid Theme
+===============================================
+*/
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  font-weight: 300;
+  color: #222222;
+  margin: 0 0 10px 0;
+}
+
+.header p {
+  font-size: 1.1em;
+  color: #666666;
+  margin: 0;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.portfolio-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-item .content {
+  padding: 20px;
+}
+
+.portfolio-item h3 {
+  font-size: 1.3em;
+  font-weight: 500;
+  margin: 0 0 10px 0;
+  color: #222222;
+}
+
+.portfolio-item p {
+  font-size: 0.95em;
+  color: #666666;
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999999;
+  font-size: 0.9em;
+  border-top: 1px solid #eeeeee;
+}
+]]></b:skin>
+</head>
+<body>
+  <div class='container'>
+    <div class='header'>
+      <h1>My Portfolio</h1>
+      <p>Minimalist design showcasing creative work</p>
+    </div>
+
+    <div class='portfolio-grid'>
+      <!-- Portfolio Item 1 -->
+      <div class='portfolio-item'>
+        <img alt='Project 1' src='https://via.placeholder.com/600x400/007bff/ffffff?text=Project+1'/>
+        <div class='content'>
+          <h3>Web Design Project</h3>
+          <p>A modern, responsive website design created for a client in the tech industry. Focused on user experience and clean aesthetics.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+
+      <!-- Portfolio Item 2 -->
+      <div class='portfolio-item'>
+        <img alt='Project 2' src='https://via.placeholder.com/600x400/28a745/ffffff?text=Project+2'/>
+        <div class='content'>
+          <h3>Brand Identity</h3>
+          <p>Complete brand identity package including logo, color palette, and typography system for a startup company.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+
+      <!-- Portfolio Item 3 -->
+      <div class='portfolio-item'>
+        <img alt='Project 3' src='https://via.placeholder.com/600x400/dc3545/ffffff?text=Project+3'/>
+        <div class='content'>
+          <h3>Mobile App UI</h3>
+          <p>User interface design for a mobile application with focus on accessibility and intuitive navigation patterns.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+
+      <!-- Portfolio Item 4 -->
+      <div class='portfolio-item'>
+        <img alt='Project 4' src='https://via.placeholder.com/600x400/ffc107/ffffff?text=Project+4'/>
+        <div class='content'>
+          <h3>Illustration Work</h3>
+          <p>Digital illustrations created for various editorial and commercial projects across multiple industries.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+
+      <!-- Portfolio Item 5 -->
+      <div class='portfolio-item'>
+        <img alt='Project 5' src='https://via.placeholder.com/600x400/6f42c1/ffffff?text=Project+5'/>
+        <div class='content'>
+          <h3>UX Research</h3>
+          <p>User experience research project analyzing navigation patterns and user behavior in e-commerce platforms.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+
+      <!-- Portfolio Item 6 -->
+      <div class='portfolio-item'>
+        <img alt='Project 6' src='https://via.placeholder.com/600x400/17a2b8/ffffff?text=Project+6'/>
+        <div class='content'>
+          <h3>Data Visualization</h3>
+          <p>Interactive data visualization dashboard for presenting complex analytics in an accessible format.</p>
+          <a class='btn' target='_blank'>View Project</a>
+        </div>
+      </div>
+    </div>
+
+    <div class='footer'>
+      <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
