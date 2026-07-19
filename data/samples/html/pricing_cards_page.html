@@ -2,31 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Pricing</title>
+  <title>Pricing Cards</title>
   <meta name="description" content="Pricing cards HTML fixture for BloggerEasy" />
   <style>
-    body { margin:0; font-family:system-ui,sans-serif; background:#f8fafc; color:#0f172a; }
+    body { margin:0; font-family:system-ui,sans-serif; background:#0f172a; color:#e2e8f0; }
     header { text-align:center; padding:2rem 1rem .5rem; }
     main { max-width:960px; margin:0 auto; padding:1rem 1.25rem 2.5rem;
       display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
-    .card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.5rem;
-      box-shadow:0 1px 2px rgba(15,23,42,.06); }
-    .card h3 { margin:0 0 .35rem; font-size:1.05rem; }
-    .price { font-size:1.75rem; font-weight:700; color:#0284c7; margin:.5rem 0; }
-    .card ul { margin:.75rem 0 0; padding-left:1.1rem; color:#475569; font-size:.9rem; }
-    .card.featured { border-color:#0ea5e9; box-shadow:0 0 0 2px rgba(14,165,233,.2); }
-    footer { text-align:center; color:#94a3b8; font-size:.8rem; padding:1.5rem; }
+    .card { background:#1e293b; border:1px solid #334155; border-radius:14px;
+      padding:1.4rem 1.2rem; text-align:center; }
+    .card h2 { margin:.2rem 0; font-size:1.1rem; color:#7dd3fc; }
+    .card .price { font-size:1.85rem; font-weight:700; color:#f8fafc; margin:.6rem 0; }
+    .card ul { list-style:none; padding:0; margin:1rem 0; color:#94a3b8; font-size:.9rem; }
+    .card li { margin:.35rem 0; }
+    .card button { background:#0ea5e9; color:#0f172a; border:0; border-radius:8px;
+      padding:.55rem 1.1rem; font-weight:600; cursor:pointer; }
+    footer { text-align:center; color:#64748b; font-size:.8rem; padding:1.5rem; }
   </style>
 </head>
 <body>
-  <header><h1>Pricing</h1><p>Sample plans for theme export</p></header>
+  <header><h1>Plans</h1><p>Sample pricing cards for theme export</p></header>
   <main>
-    <div class="card"><h3>Starter</h3><div class="price">$0</div>
-      <ul><li>1 site</li><li>Basic themes</li><li>Community support</li></ul></div>
-    <div class="card featured"><h3>Pro</h3><div class="price">$12</div>
-      <ul><li>5 sites</li><li>Premium themes</li><li>Email support</li></ul></div>
-    <div class="card"><h3>Studio</h3><div class="price">$29</div>
-      <ul><li>Unlimited sites</li><li>Custom CSS</li><li>Priority support</li></ul></div>
+    <div class="card">
+      <h2>Starter</h2>
+      <div class="price">$0</div>
+      <ul><li>Offline demos</li><li>HTML fixtures</li><li>CLI validate</li></ul>
+      <button type="button">Get started</button>
+    </div>
+    <div class="card">
+      <h2>Pro</h2>
+      <div class="price">$19</div>
+      <ul><li>Theme packs</li><li>Export tools</li><li>Priority docs</li></ul>
+      <button type="button">Choose Pro</button>
+    </div>
+    <div class="card">
+      <h2>Studio</h2>
+      <div class="price">$49</div>
+      <ul><li>Custom CSS</li><li>Batch export</li><li>Support queue</li></ul>
+      <button type="button">Contact</button>
+    </div>
   </main>
   <footer>Demo HTML · BloggerEasy pricing_cards_page</footer>
 </body>
