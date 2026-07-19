@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - My Blog</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background: #f8f9fa; color: #212529; }
+    header { background: #4cc9f0; color: white; padding: 2rem; text-align: center; }
+    header h1 { margin: 0 0 1rem 0; font-size: 2.5rem; }
+    header p { margin: 0; font-size: 1.25rem; opacity: 0.9; }
+    nav { background: #333; padding: 1rem; }
+    nav a { color: white; margin: 0 1rem; text-decoration: none; font-weight: 500; }
+    nav a:hover { text-decoration: underline; }
+    .hero { background: #e9f7ef; padding: 3rem 2rem; text-align: center; }
+    .hero h2 { margin-top: 0; font-size: 2rem; color: #2c3e50; }
+    .hero p { max-width: 600px; margin: 0 auto 2rem auto; font-size: 1.25rem; color: #34495e; }
+    .btn { display: inline-block; background: #4cc9f0; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-weight: 600; }
+    .btn:hover { background: #3a9fd4cc9f0; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    .feature { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
+    .feature h3 { margin-top: 0; color: #2c3e50; }
+    .feature p { color: #7f8c8d; line-height: 1.6; }
+    footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; font-size: 0.9rem; }
+    footer a { color: #4cc9f0; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Blog</h1>
+    <p>Sharing thoughts on technology and life</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome to My Blog</h2>
+    <p>Explore insights, tutorials, and stories about web development, design, and technology.</p>
+    <a href="#latest-posts" class="button">Read Latest Posts</a>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <h3>Web Development</h3>
+      <p>Learn modern web development techniques with practical examples and tutorials.</p>
+    </div>
+    <div class="feature">
+      <h3>Design Principles</h3>
+      <p>Explore UI/UX design, color theory, and creating beautiful interfaces.</p>
+    </div>
+    <div class="feature">
+      <h3>Technology Trends</h3>
+      <p>Stay updated with the latest trends in software, AI, and emerging technologies.</p>
+    </div>
+  </section>
+
+  <section id="latest-posts">
+    <h2 style="text-align: center; margin: 3rem 0;">Recent Posts</h2>
+    <div style="max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; padding: 0 2rem;">
+      <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>Getting Started with CSS Grid</h3>
+        <p>Learn how to create modern layouts with CSS Grid in this comprehensive guide.</p>
+        <a href="#" style="color: #4cc9f0;">Read more →</a>
+      </div>
+      <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>JavaScript Modern Features</h3>
+        <p>Explore ES6+ features that make JavaScript development cleaner and more efficient.</p>
+        <a href="#" style="color: #4cc9f0;">Read more →</a>
+      </div>
+      <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>Responsive Design Principles</h3>
+        <p>Create websites that look great on any device with responsive design techniques.</p>
+        <a href="#" style="color: #4cc9f0;">Read more →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 My Blog. All rights reserved.</p>
+    <p>
+      <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact</a>
+    </p>
+  </footer>
+</body>
+</html>

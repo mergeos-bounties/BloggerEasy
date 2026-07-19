@@ -62,6 +62,25 @@ PRESETS: dict[str, dict] = {
         "dense": False,
         "accent": "#0055aa",
     },
+    # Multi-page site templates
+    "home": {
+        "layout_hint": "single-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#4cc9f0",
+    },
+    "about": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": False,
+        "accent": "#f72585",
+    },
+    "contact": {
+        "layout_hint": "two-column",
+        "dark": False,
+        "dense": True,
+        "accent": "#4cc9f0",
+    },
 }
 
 
