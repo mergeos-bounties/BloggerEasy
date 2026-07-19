@@ -2,28 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>FAQ</title>
+  <title>FAQ Accordion</title>
   <meta name="description" content="FAQ accordion HTML fixture for BloggerEasy" />
   <style>
-    body { margin:0; font-family:system-ui,sans-serif; background:#f1f5f9; color:#0f172a; }
-    header { text-align:center; padding:2rem 1rem 0.5rem; }
-    main { max-width:640px; margin:0 auto; padding:1rem 1.25rem 2.5rem; }
-    details { background:#fff; border:1px solid #e2e8f0; border-radius:10px;
+    body { margin:0; font-family:system-ui,sans-serif; background:#0b1220; color:#e2e8f0; }
+    header { text-align:center; padding:2rem 1rem .75rem; }
+    main { max-width:640px; margin:0 auto; padding:0 1.25rem 2.5rem; }
+    details { background:#1e293b; border:1px solid #334155; border-radius:10px;
       margin-bottom:.75rem; padding:.85rem 1rem; }
-    summary { font-weight:600; cursor:pointer; }
-    details p { margin:.6rem 0 0; color:#475569; font-size:.92rem; line-height:1.45; }
-    footer { text-align:center; color:#94a3b8; font-size:.8rem; padding:1.5rem; }
+    summary { cursor:pointer; font-weight:600; color:#7dd3fc; }
+    details p { margin:.65rem 0 0; color:#94a3b8; line-height:1.5; font-size:.95rem; }
+    footer { text-align:center; color:#64748b; font-size:.8rem; padding:1.5rem; }
   </style>
 </head>
 <body>
   <header><h1>FAQ</h1><p>Sample accordion for theme export</p></header>
   <main>
-    <details open><summary>How do I install a theme?</summary>
-      <p>Upload the XML to Blogger Theme → Edit HTML, then preview.</p></details>
-    <details><summary>Does offline validate work?</summary>
-      <p>Yes — run <code>bloggereasy validate</code> against sample HTML fixtures.</p></details>
-    <details><summary>Where are sample packs?</summary>
-      <p>See <code>data/samples/html/</code> for export-ready pages.</p></details>
+    <details open>
+      <summary>Does BloggerEasy work offline?</summary>
+      <p>Yes. Sample HTML fixtures and CLI demos run without network access.</p>
+    </details>
+    <details>
+      <summary>Are secrets allowed in fixtures?</summary>
+      <p>No. Keep tokens and production credentials out of committed samples.</p>
+    </details>
+    <details>
+      <summary>How do I validate a theme pack?</summary>
+      <p>Use the package CLI validate/demo commands documented in the README.</p>
+    </details>
   </main>
   <footer>Demo HTML · BloggerEasy faq_accordion_page</footer>
 </body>
