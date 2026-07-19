@@ -194,12 +194,14 @@ Respect site Terms of Service when fetching live URLs.
 ---
 
 ## Import into Blogger
+## Import into Blogger
+For detailed import instructions with screenshots and troubleshooting, see [Import Blogger Guide](docs/IMPORT_BLOGGER.md).
 
-1. Open [Blogger](https://www.blogger.com/) → your blog → **Theme**.  
-2. **⋮** → **Backup** (save current theme first).  
-3. **Restore** / **Upload** the generated `.xml` (default under `data/out/`).  
-4. Confirm — layout, CSS, and widgets apply.  
-5. Preview and fine-tune under Theme customize if needed.
+| 1. Open [Blogger](https://www.blogger.com/) → your blog → **Theme**.  
+| 2. **⋮** → **Backup** (save current theme first).  
+| 3. **Restore** / **Upload** the generated `.xml` (default under `data/out/`).  
+| 4. Confirm — layout, CSS, and widgets apply.  
+| 5. Preview and fine-tune under Theme customize if needed.
 
 ---
 
