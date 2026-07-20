@@ -466,5 +466,56 @@ def serve_cmd(
     uvicorn.run("bloggereasy.api.app:app", host=host, port=port, log_level="info")
 
 
+@gen_app.command("multipage")
+def gen_multipage(
+    input: Path = typer.Option(
+        ...,
+        "--input",
+        "-i",
+        exists=True,
+        dir_okay=False,
+        help="HTML source file for design extraction.",
+    ),
+    out_dir: Path | None = typer.Option(
+        None, "--out-dir", "-o", help="Output directory (default: out/multipage/<name>)."
+    ),
+    template: str = typer.Option("simple", "--template", "-t"),
+) -> None:
+    """Generate a coordinated multi-page theme set (home + about + contact)."""
+    from bloggereasy.integrations.sdk import generate_from_html
+    from bloggereasy.theme.multipage import generate_multipage
+
+    base_result = generate_from_html(input, Path("/dev/null"), template=template)
+    base_structure = base_result["structure"]
+
+    target = out_dir or (OUT_DIR / "multipage" / input.stem)
+    manifest = generate_multipage(base_structure, target, template=template)
+
+    console.print(f"[green]Multi-page set ready[/green] → {target}")
+    table = Table(title="Multi-page theme set")
+    table.add_column("Page")
+    table.add_column("File")
+    table.add_column("Bytes", justify="right")
+    table.add_column("Valid")
+    for page_type, info in manifest["pages"].items():
+        table.add_row(
+            page_type,
+            info["file"],
+            str(info["bytes"]),
+            "✓" if info["validation"]["ok"] else "✗",
+        )
+    console.print(table)
+    console.print_json(
+        data={
+            "multipage_version": manifest["multipage_version"],
+            "template": manifest["template"],
+            "validation_ok": manifest["validation_ok"],
+            "shared_design": manifest["shared_design"],
+        }
+    )
+    if not manifest["validation_ok"]:
+        raise typer.Exit(1)
+
+
 if __name__ == "__main__":
     app()
