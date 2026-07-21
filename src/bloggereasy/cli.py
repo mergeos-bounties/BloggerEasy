@@ -328,10 +328,13 @@ def _validate_widgets(widgets: str) -> None:
 
 def _sample_for_template(template: str) -> Path:
     sample_map = {
+        "about": "about.html",
+        "contact": "contact.html",
         "dark": "dark_dev.html",
         "docs": "docs_blog.html",
         "food_recipe": "food_recipe.html",
         "from-image": "portfolio.html",
+        "home": "home.html",
         "magazine": "magazine.html",
         "magazine_news": "magazine_news.html",
         "landing": "landing_saas.html",
